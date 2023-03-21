@@ -1,0 +1,61 @@
+services:
+  - type: web
+    name: api-gateway
+    env: node
+    plan: standard
+    branch: main
+    rootDir: apps/api-gateway
+    buildCommand: cd ../.. && pnpm build --filter=apps/api-gateway
+    startCommand: pnpm start
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetMemoryPercent: 75
+      targetCPUPercent: 75
+    domains:
+      - api.sneakerbase.io
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: PORT
+        value: 3000
+
+  - type: cron
+    name: non-processed-images
+    env: node
+    plan: standard
+    branch: main
+    rootDir: apps/jobs
+    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    startCommand: pnpm start --job=non-processed-images
+    schedule: "0 05 * * *" # every day at 5am
+
+  - type: cron
+    name: process-prices
+    env: node
+    plan: standard
+    branch: main
+    rootDir: apps/jobs
+    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    startCommand: pnpm start --job=process-prices
+    schedule: "0 0 * * 0" # every sunday at midnight
+
+  - type: cron
+    name: sneaker-discovery
+    env: node
+    plan: standard
+    branch: main
+    rootDir: apps/jobs
+    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    startCommand: pnpm start --job=sneaker-discovery
+    schedule: "0 0 * * *" # every day at midnight
+
+  - type: cron
+    name: sneaker-of-the-day
+    env: node
+    plan: standard
+    branch: main
+    rootDir: apps/jobs
+    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    startCommand: pnpm start --job=sneaker-of-the-day
+    schedule: "0 0 * * *" # every day at midnight

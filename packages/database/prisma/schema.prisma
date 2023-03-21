@@ -1,0 +1,86 @@
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator js {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
+}
+
+enum ImageStatus {
+  PENDING
+  PROCESSED
+  PROCESSING
+  FAILED
+  SUCCESS
+  APPROVED
+  REJECTED
+  HAS_PLACEHOLDER
+}
+
+model Product {
+  id                      String                          @id @unique @default(uuid())
+  title                   String                          @db.VarChar(500)
+  colorWay                String
+  make                    String
+  retailPrice             Float
+  sku                     String                          @unique
+  releaseDate             DateTime?
+  previewImageUrl         String                          @db.VarChar(500)
+  description             String                          @db.VarChar(2000)
+  isPlaceholder           Boolean                         @default(false)
+  imageStatus             ImageStatus                     @default(PENDING)
+  derivedColor            String?
+  derivedSecondaryColor   String?
+  prices                  Price[]
+  updatedAt               DateTime                        @updatedAt
+  sneakersOfTheDay        SneakerOfTheDay[]
+  links                   ProductLink[]
+
+  @@fulltext([title])
+  @@fulltext([make])
+  @@fulltext([colorWay])
+  @@fulltext([title, make, colorWay])
+}
+
+model ProductLink {
+  id                    String                          @id @unique @default(uuid())
+  product               Product                         @relation(fields: [productId], references: [id])
+  productId             String
+  url                   String                          @db.VarChar(500)
+  store                 Store
+  createdAt             DateTime                        @default(now())
+
+  @@index(fields: [productId, store], name: "productId_store")
+}
+
+enum Store {
+  STOCKX
+  GOAT
+  STADIUMGOODS
+  FLIGHTCLUB
+}
+
+model Price {
+  id                    String                          @id @unique @default(uuid())
+  store                 Store
+  product               Product                         @relation(fields: [productId], references: [id])
+  productId             String
+  price                 Float
+  size                  String
+  change                Float                           @default(0)
+  createdAt             DateTime                        @default(now())
+  updatedAt             DateTime                        @updatedAt @default(now())
+
+  @@index(fields: [productId, store, size], name: "productId_store_size")
+  @@index(fields: [store, size, createdAt], name: "store_size_createdAt")
+}
+
+model SneakerOfTheDay {
+  id                    String                          @id @unique @default(uuid())
+  product               Product                         @relation(fields: [productId], references: [id])
+  productId             String
+  createdAt             DateTime                        @default(now())
+}

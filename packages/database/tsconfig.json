@@ -1,0 +1,9 @@
+{
+  "extends": "config/base.json",
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "baseUrl": "src"
+  }
+}

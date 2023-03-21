@@ -1,0 +1,37 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node build/index.js | pino-pretty --colorize",
+    "dev": "ts-node-dev --respawn --watch src ./src/index.ts | pino-pretty --colorize"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/caching": "^8.2.0",
+    "@fastify/cors": "^8.2.1",
+    "@fastify/error": "^3.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/redis": "^6.1.0",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.5.0",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.14.1",
+    "fastify-type-provider-zod": "^1.1.9",
+    "http-errors": "^2.0.0",
+    "pino": "^8.11.0",
+    "zod": "^3.21.4",
+    "config": "workspace:*",
+    "database": "workspace:*"
+  },
+  "devDependencies": {
+    "pino-pretty": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.2"
+  }
+}
