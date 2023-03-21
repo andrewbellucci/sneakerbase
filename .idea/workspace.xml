@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,11 +57,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/jobs/src/utils" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/lib/sneakers" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/tasks/sneaker" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -121,7 +119,7 @@
       <workItem from="1679353825615" duration="153000" />
       <workItem from="1679353984097" duration="3841000" />
       <workItem from="1679360387292" duration="2197000" />
-      <workItem from="1679362594086" duration="4352000" />
+      <workItem from="1679362594086" duration="4600000" />
     </task>
     <servers />
   </component>

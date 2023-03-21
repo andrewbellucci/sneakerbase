@@ -5,7 +5,7 @@ services:
     plan: standard
     branch: main
     rootDir: apps/api-gateway
-    buildCommand: cd ../.. && pnpm build --filter=apps/api-gateway
+    buildCommand: cd ../.. && pnpm install && pnpm build --filter=apps/api-gateway
     startCommand: pnpm start
     scaling:
       minInstances: 1
@@ -26,7 +26,7 @@ services:
     plan: standard
     branch: main
     rootDir: apps/jobs
-    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    buildCommand: cd ../.. && pnpm install && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=non-processed-images
     schedule: "0 05 * * *" # every day at 5am
     envVars:
@@ -55,7 +55,7 @@ services:
     plan: standard
     branch: main
     rootDir: apps/jobs
-    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    buildCommand: cd ../.. && pnpm install && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=process-prices
     schedule: "0 0 * * 0" # every sunday at midnight
     envVars:
@@ -84,7 +84,7 @@ services:
     plan: standard
     branch: main
     rootDir: apps/jobs
-    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    buildCommand: cd ../.. && pnpm install && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=sneaker-discovery
     schedule: "0 0 * * *" # every day at midnight
     envVars:
@@ -113,7 +113,7 @@ services:
     plan: standard
     branch: main
     rootDir: apps/jobs
-    buildCommand: cd ../.. && pnpm build --filter=apps/jobs
+    buildCommand: cd ../.. && pnpm install && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=sneaker-of-the-day
     schedule: "0 0 * * *" # every day at midnight
     envVars:
