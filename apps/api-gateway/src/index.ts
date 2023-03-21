@@ -16,8 +16,8 @@ async function startServer() {
     server.setSerializerCompiler(serializerCompiler);
 
     // Plugins
-    server.register(import('@fastify/cors'), { origin: '*' });
-    server.register(import('@fastify/helmet'));
+    server.register(require('@fastify/cors'), { origin: '*' });
+    server.register(require('@fastify/helmet'));
 
     // Swagger Docs
     server.register(fastifySwagger, {
@@ -34,7 +34,7 @@ async function startServer() {
     server.register(fastifySwaggerUI, { routePrefix: '/docs' });
 
     // Routes
-    server.register(import('./routes/health'), { prefix: '/health' });
+    server.register(require('./routes/health'), { prefix: '/health' });
 
     await server.listen({
       port: env.PORT,

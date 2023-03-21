@@ -10,9 +10,9 @@ const EnvSchema = z.object({
 
 export type EnvType = z.infer<typeof EnvSchema>;
 
-export const env: EnvType = {
+const variables = {
   DATABASE_URL: process.env.DATABASE_URL,
   PORT: Number(process.env.PORT),
 };
 
-EnvSchema.parse(env);
+export const env = EnvSchema.parse(variables);
