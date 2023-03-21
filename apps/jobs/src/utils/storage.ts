@@ -2,12 +2,12 @@ import { S3 } from 'aws-sdk';
 import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
 import SendData = ManagedUpload.SendData;
 import { DeleteObjectOutput } from 'aws-sdk/clients/s3';
-import { env } from "../utils/env";
+import { env } from "./env";
 import { logger } from "~utils/logger";
 
 const spaceName = 'sneakerbase';
 const s3 = new S3({
-  endpoint: 'nyc3.digitaloceanspaces.com',
+  endpoint: '990780148d62a437b13e976156284680.r2.cloudflarestorage.com',
   accessKeyId: env.SPACES_ACCESS_KEY,
   secretAccessKey: env.SPACES_SECRET_KEY,
 });

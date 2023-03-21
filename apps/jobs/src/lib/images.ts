@@ -5,7 +5,7 @@ import { searchStockX } from "../utils/stockx-algolia";
 import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "~utils/transform-product-image-url";
 import { downloadImage } from "~utils/download-image";
-import { uploadFile } from "./storage";
+import { uploadFile } from "../utils/storage";
 const Vibrant = require('node-vibrant');
 
 const ImageNeedsProcessing = {
