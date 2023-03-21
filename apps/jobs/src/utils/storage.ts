@@ -3,7 +3,7 @@ import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
 import SendData = ManagedUpload.SendData;
 import { DeleteObjectOutput } from 'aws-sdk/clients/s3';
 import { env } from "./env";
-import { logger } from "~utils/logger";
+import { logger } from "@sneakerbase/utils";
 
 const spaceName = 'sneakerbase';
 const s3 = new S3({

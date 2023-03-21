@@ -1,9 +1,10 @@
 {
-  "extends": "config/base.json",
-  "exclude": [
-    "node_modules"
-  ],
+  "extends": "@sneakerbase/config/api.tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src"
-  }
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "declaration": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules/**/*", "./dist/**/*"]
 }

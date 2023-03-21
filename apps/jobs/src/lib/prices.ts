@@ -1,4 +1,4 @@
-import { promiseAllInBatches } from "~utils/promise-all-in-batches";
+import { promiseAllInBatches } from "@sneakerbase/utils";
 import { prisma } from "../utils/prisma";
 import { processPricing as stockXProcessPricing } from './sneakers/stores/stockx';
 import { processPricing as goatProcessPricing } from './sneakers/stores/goat';

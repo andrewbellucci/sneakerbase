@@ -1,4 +1,4 @@
-import { logger } from "~utils/logger";
+import { logger } from "@sneakerbase/utils";
 import { pickSneakerOfTheDay } from "../lib/sneakers";
 
 export default async function() {

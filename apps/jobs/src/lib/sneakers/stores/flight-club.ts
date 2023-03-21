@@ -1,5 +1,5 @@
 import { prisma } from "../../../utils/prisma";
-import { Store } from "~database/client";
+import { Store } from "@sneakerbase/database";
 import { generateProxy } from "../../../utils/generate-proxy";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const promiseRetry = require("promise-retry");

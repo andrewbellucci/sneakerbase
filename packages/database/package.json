@@ -1,16 +1,17 @@
 {
-  "name": "database",
+  "name": "@sneakerbase/database",
   "version": "0.0.0",
   "private": true,
-  "main": "src/client.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "prisma": "^4.11.0",
-    "config": "workspace:*"
+    "@sneakerbase/config": "workspace:*"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0"
   },
   "scripts": {
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && tsc"
   }
 }

@@ -15,13 +15,9 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020",
+    "target": "es5",
     "lib": ["ES2020"],
-    "paths": {
-      "~utils/*": ["../../packages/utils/src/*"],
-      "~types/*": ["../../packages/types/src/*"],
-      "~database/*": ["../../packages/database/src/*"]
-    }
+    "module": "NodeNext"
   },
   "exclude": ["node_modules"]
 }

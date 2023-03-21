@@ -1,10 +1,10 @@
 import { prisma } from "../utils/prisma";
-import { ImageStatus } from "~database/client";
-import { promiseAllInBatches } from "~utils/promise-all-in-batches";
+import { ImageStatus } from "@sneakerbase/database";
+import { promiseAllInBatches } from "@sneakerbase/utils";
 import { searchStockX } from "../utils/stockx-algolia";
 import { isPlaceholderImage } from "../utils/is-placeholder-image";
-import { transformProductImageUrl } from "~utils/transform-product-image-url";
-import { downloadImage } from "~utils/download-image";
+import { transformProductImageUrl } from "@sneakerbase/utils";
+import { downloadImage } from "@sneakerbase/utils";
 import { uploadFile } from "../utils/storage";
 const Vibrant = require('node-vibrant');
 

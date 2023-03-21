@@ -1,16 +1,11 @@
 {
   "name": "api-gateway",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node build/index.js | pino-pretty --colorize",
+    "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --watch src ./src/index.ts | pino-pretty --colorize"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@fastify/caching": "^8.2.0",
     "@fastify/cors": "^8.2.1",
@@ -25,8 +20,8 @@
     "http-errors": "^2.0.0",
     "pino": "^8.11.0",
     "zod": "^3.21.4",
-    "config": "workspace:*",
-    "database": "workspace:*"
+    "@sneakerbase/config": "workspace:*",
+    "@sneakerbase/database": "workspace:*"
   },
   "devDependencies": {
     "pino-pretty": "^10.0.0",

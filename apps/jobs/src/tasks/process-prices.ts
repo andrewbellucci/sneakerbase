@@ -1,4 +1,4 @@
-import { logger } from "~utils/logger";
+import { logger } from "@sneakerbase/utils";
 import { processAllSneakerPrices } from "../lib/prices";
 
 export default async function() {

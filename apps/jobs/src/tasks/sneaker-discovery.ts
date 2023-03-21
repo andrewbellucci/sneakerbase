@@ -1,4 +1,4 @@
-import { logger } from "~utils/logger";
+import { logger } from "@sneakerbase/utils";
 import { collectSneakersFromTraits, collectTraits, processSneakersFound } from "../lib/sneakers";
 
 export default async function() {

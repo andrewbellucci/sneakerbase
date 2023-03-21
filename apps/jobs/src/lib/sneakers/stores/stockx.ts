@@ -1,6 +1,6 @@
 import { generateProxyString } from "../../../utils/generate-proxy";
 import { prisma } from "../../../utils/prisma";
-import { Store } from "~database/client";
+import { Store } from "@sneakerbase/database";
 import { searchStockX } from "../../../utils/stockx-algolia";
 import { Price } from "../types";
 // eslint-disable-next-line @typescript-eslint/no-var-requires

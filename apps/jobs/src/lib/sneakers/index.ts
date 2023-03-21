@@ -1,6 +1,6 @@
 import { defaultStockXAlgoliaOptions, searchStockX, SneakerResponse } from "../../utils/stockx-algolia";
-import { Store } from "~database/client";
-import { promiseAllInBatches } from "~utils/promise-all-in-batches";
+import { Store } from "@sneakerbase/database";
+import { promiseAllInBatches } from "@sneakerbase/utils";
 import { prisma } from "../../utils/prisma";
 import { isPlaceholderImage } from "../../utils/is-placeholder-image";
 import { processSneakerImage } from "../images";
