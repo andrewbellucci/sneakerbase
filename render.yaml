@@ -29,6 +29,25 @@ services:
     buildCommand: cd ../.. && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=non-processed-images
     schedule: "0 05 * * *" # every day at 5am
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STOCKX_ALGOLIA_APP_ID
+        sync: false
+      - key: STOCKX_ALGOLIA_API_KEY
+        sync: false
+      - key: SPACES_ACCESS_KEY
+        sync: false
+      - key: SPACES_SECRET_KEY
+        sync: false
+      - key: PROXY_HOST
+        sync: false
+      - key: PROXY_PORT
+        sync: false
+      - key: PROXY_USERNAME
+        sync: false
+      - key: PROXY_PASSWORD
+        sync: false
 
   - type: cron
     name: process-prices
@@ -39,6 +58,25 @@ services:
     buildCommand: cd ../.. && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=process-prices
     schedule: "0 0 * * 0" # every sunday at midnight
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STOCKX_ALGOLIA_APP_ID
+        sync: false
+      - key: STOCKX_ALGOLIA_API_KEY
+        sync: false
+      - key: SPACES_ACCESS_KEY
+        sync: false
+      - key: SPACES_SECRET_KEY
+        sync: false
+      - key: PROXY_HOST
+        sync: false
+      - key: PROXY_PORT
+        sync: false
+      - key: PROXY_USERNAME
+        sync: false
+      - key: PROXY_PASSWORD
+        sync: false
 
   - type: cron
     name: sneaker-discovery
@@ -49,6 +87,25 @@ services:
     buildCommand: cd ../.. && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=sneaker-discovery
     schedule: "0 0 * * *" # every day at midnight
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STOCKX_ALGOLIA_APP_ID
+        sync: false
+      - key: STOCKX_ALGOLIA_API_KEY
+        sync: false
+      - key: SPACES_ACCESS_KEY
+        sync: false
+      - key: SPACES_SECRET_KEY
+        sync: false
+      - key: PROXY_HOST
+        sync: false
+      - key: PROXY_PORT
+        sync: false
+      - key: PROXY_USERNAME
+        sync: false
+      - key: PROXY_PASSWORD
+        sync: false
 
   - type: cron
     name: sneaker-of-the-day
@@ -59,3 +116,22 @@ services:
     buildCommand: cd ../.. && pnpm build --filter=apps/jobs
     startCommand: pnpm start --job=sneaker-of-the-day
     schedule: "0 0 * * *" # every day at midnight
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STOCKX_ALGOLIA_APP_ID
+        sync: false
+      - key: STOCKX_ALGOLIA_API_KEY
+        sync: false
+      - key: SPACES_ACCESS_KEY
+        sync: false
+      - key: SPACES_SECRET_KEY
+        sync: false
+      - key: PROXY_HOST
+        sync: false
+      - key: PROXY_PORT
+        sync: false
+      - key: PROXY_USERNAME
+        sync: false
+      - key: PROXY_PASSWORD
+        sync: false
