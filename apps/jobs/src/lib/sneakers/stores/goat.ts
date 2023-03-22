@@ -14,12 +14,19 @@ export async function processPricing(productId: string): Promise<void> {
 
   const product = await prisma.product.findUnique({
     where: { id: productId },
-    select: { id: true, sku: true },
+    select: { id: true, sku: true, goatUrl: true },
   });
 
   if (!product) throw new Error(`Product with id ${productId} not found`);
 
-  const prices = await getPricesFromSKU(product.sku);
+  const { prices, url } = await getPricesAndUrl(product.sku);
+
+  if (product.goatUrl !== url) {
+    await prisma.product.update({
+      where: { id: productId },
+      data: { goatUrl: url }
+    });
+  }
 
   const pricesStored = await prisma.price.findMany({
     where: {
@@ -54,17 +61,20 @@ export async function processPricing(productId: string): Promise<void> {
   }));
 }
 
-async function getPricesFromSKU(sku: string): Promise<Price[]> {
-  const templateId = await getProductTemplateId(sku);
+async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {
+  const { templateId, url } = await getProductData(sku);
   const pricing = await getProductPricing(templateId);
 
-  return Object.keys(pricing).map(size => ({
-    size,
-    price: pricing[size],
-  }));
+  return {
+    prices: Object.keys(pricing).map(size => ({
+      size,
+      price: pricing[size],
+    })),
+    url
+  };
 }
 
-async function getProductTemplateId(sku: string): Promise<string> {
+async function getProductData(sku: string): Promise<{ templateId: string; url: string }> {
   let response = await promiseRetry((retry: any) => {
     return axios.post(
       productDataEndpoint,
@@ -92,7 +102,10 @@ async function getProductTemplateId(sku: string): Promise<string> {
 
   if (!product || !product.product_template_id) throw Error(`"${sku}" does not exist.`);
 
-  return product.product_template_id as string;
+  return {
+    templateId: product.product_template_id as string,
+    url: 'https://www.goat.com/sneakers/' + product.slug as string,
+  }
 }
 
 async function getProductPricing(templateId: string): Promise<Record<string, number>> {

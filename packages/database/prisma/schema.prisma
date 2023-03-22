@@ -32,28 +32,19 @@ model Product {
   description             String                          @db.VarChar(2000)
   isPlaceholder           Boolean                         @default(false)
   imageStatus             ImageStatus                     @default(PENDING)
+  stockXUrl               String?                         @db.VarChar(500)
+  goatUrl                 String?                         @db.VarChar(500)
+  flightClubUrl           String?                         @db.VarChar(500)
   derivedColor            String?
   derivedSecondaryColor   String?
   prices                  Price[]
   updatedAt               DateTime                        @updatedAt
   sneakersOfTheDay        SneakerOfTheDay[]
-  links                   ProductLink[]
 
   @@fulltext([title])
   @@fulltext([make])
   @@fulltext([colorWay])
   @@fulltext([title, make, colorWay])
-}
-
-model ProductLink {
-  id                    String                          @id @unique @default(uuid())
-  product               Product                         @relation(fields: [productId], references: [id])
-  productId             String
-  url                   String                          @db.VarChar(500)
-  store                 Store
-  createdAt             DateTime                        @default(now())
-
-  @@index(fields: [productId, store], name: "productId_store")
 }
 
 enum Store {

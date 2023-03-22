@@ -24,12 +24,19 @@ export async function processPricing(productId: string): Promise<void> {
 
   const product = await prisma.product.findUnique({
     where: { id: productId },
-    select: { id: true, sku: true },
+    select: { id: true, sku: true, stockXUrl: true },
   });
 
   if (!product) throw Error(`Product with id "${productId}" does not exist.`);
 
-  const prices = await getPricesFromSKU(product.sku);
+  const { prices, url } = await getPricesAndUrl(product.sku);
+
+  if (product.stockXUrl !== url) {
+    await prisma.product.update({
+      where: { id: productId },
+      data: { stockXUrl: url }
+    });
+  }
 
   const pricesStored = await prisma.price.findMany({
     where: {
@@ -64,14 +71,17 @@ export async function processPricing(productId: string): Promise<void> {
   }));
 }
 
-async function getPricesFromSKU(sku: string): Promise<Price[]> {
+async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {
   const productData = await getProductData(sku);
   const pricing = await getProductPricing(productData.link);
 
-  return Object.keys(pricing).map(size => ({
-    size,
-    price: pricing[size],
-  }));
+  return {
+    prices: Object.keys(pricing).map(size => ({
+      size,
+      price: pricing[size],
+    })),
+    url: productData.link
+  }
 }
 
 async function getProductData(sku: string): Promise<StockxProductData> {

@@ -1,4 +1,5 @@
 import commandLineArgs from 'command-line-args';
+import schedule from "node-schedule";
 
 const optionDefinitions = [
   { name: 'job', alias: 'j', type: String },
@@ -18,3 +19,9 @@ import(`./tasks/${job}`)
     console.log(error);
     process.exit(1);
   });
+
+
+process.on('SIGINT', async function () {
+  await schedule.gracefulShutdown();
+  process.exit(0);
+});
