@@ -1,15 +1,13 @@
-import { S3 } from 'aws-sdk';
-import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
-import SendData = ManagedUpload.SendData;
-import { DeleteObjectOutput } from 'aws-sdk/clients/s3';
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { env } from "./env";
-import { logger } from "@sneakerbase/utils";
 
 const spaceName = 'sneakerbase';
-const s3 = new S3({
+const s3 = new S3Client({
   endpoint: '990780148d62a437b13e976156284680.r2.cloudflarestorage.com',
-  accessKeyId: env.SPACES_ACCESS_KEY,
-  secretAccessKey: env.SPACES_SECRET_KEY,
+  credentials: {
+    accessKeyId: env.SPACES_ACCESS_KEY,
+    secretAccessKey: env.SPACES_SECRET_KEY,
+  }
 });
 
 export async function uploadFile(
@@ -17,7 +15,7 @@ export async function uploadFile(
   fileName: string,
   bucketName: string,
   contentType?: string,
-): Promise<SendData> {
+) {
   return await uploadS3(
     buffer,
     spaceName + '/' + bucketName,
@@ -29,7 +27,7 @@ export async function uploadFile(
 export async function removeFile(
   fileName: string,
   bucketName: string,
-): Promise<DeleteObjectOutput> {
+) {
   return await removeS3(spaceName + '/' + bucketName, fileName);
 }
 
@@ -38,7 +36,7 @@ function uploadS3(
   bucket: string,
   name: string,
   contentType?: string,
-): Promise<SendData> {
+) {
   const params = contentType
     ? {
       ACL: 'public-read',
@@ -54,30 +52,12 @@ function uploadS3(
       Body: file,
     };
 
-  return new Promise((resolve, reject) => {
-    s3.upload({ ...params }, (err, data: SendData) => {
-      if (err) {
-        logger.error(err);
-        reject(err.message);
-      }
-      resolve(data);
-    });
-  });
+  return s3.send(new PutObjectCommand(params));
 }
 
-function removeS3(bucket: string, name: string): Promise<DeleteObjectOutput> {
-  const params = {
+function removeS3(bucket: string, name: string) {
+  return s3.send(new DeleteObjectCommand({
     Bucket: bucket,
     Key: String(name),
-  };
-
-  return new Promise((resolve, reject) => {
-    s3.deleteObject(params, (err, data) => {
-      if (err) {
-        logger.error(err);
-        reject(err.message);
-      }
-      resolve(data);
-    });
-  });
+  }));
 }
