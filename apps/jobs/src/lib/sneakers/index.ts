@@ -114,12 +114,6 @@ async function processSneaker(sneaker: SneakerResponse) {
       make: sneaker.make,
       retailPrice: sneaker.price,
       sku: sneaker.style_id,
-      links: {
-        create: {
-          url: sneaker.url,
-          store: Store.STOCKX
-        },
-      },
       isPlaceholder: isPlaceholderImage(sneaker.thumbnail_url || sneaker.media.imageUrl),
       releaseDate: sneaker.release_date && sneaker.release_date.trim() !== ''
         ? new Date(sneaker.release_date)
