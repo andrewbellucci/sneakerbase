@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node build/index.js",
+    "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
   },
   "keywords": [],
