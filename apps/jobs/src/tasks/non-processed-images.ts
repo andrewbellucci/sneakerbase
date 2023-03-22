@@ -1,7 +1,7 @@
 import schedule from "node-schedule";
 import { logger } from "@sneakerbase/utils";
 import { processSneakerImages } from "../lib/images";
-import { EVERY_DAY_AT_5AM } from "src/utils/cron";
+import { EVERY_DAY_AT_5AM } from "../utils/cron";
 
 export default function () {
   schedule.scheduleJob(EVERY_DAY_AT_5AM, async function () {

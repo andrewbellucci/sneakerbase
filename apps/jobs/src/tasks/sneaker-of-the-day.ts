@@ -1,7 +1,7 @@
 import { logger } from "@sneakerbase/utils";
 import { pickSneakerOfTheDay } from "../lib/sneakers";
 import schedule from "node-schedule";
-import { EVERY_DAY_AT_MIDNIGHT } from "src/utils/cron";
+import { EVERY_DAY_AT_MIDNIGHT } from "../utils/cron";
 
 export default async function() {
   schedule.scheduleJob(EVERY_DAY_AT_MIDNIGHT, async function () {
