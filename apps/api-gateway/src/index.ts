@@ -36,7 +36,7 @@ async function startServer() {
     // Routes
     server.register(require('./routes/health'), { prefix: '/health' });
 
-    await server.listen(env.PORT);
+    await server.listen(env.PORT, "0.0.0.0");
   } catch (e) {
     console.error(e);
   }
