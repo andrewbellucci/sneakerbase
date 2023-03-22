@@ -4,12 +4,14 @@ importers:
 
   .:
     specifiers:
+      husky: ^8.0.3
       prettier: latest
       turbo: latest
       typescript: ^5.0.2
     dependencies:
       typescript: 5.0.2
     devDependencies:
+      husky: 8.0.3
       prettier: 2.8.6
       turbo: 1.8.5
 
@@ -1853,6 +1855,12 @@ packages:
       quick-lru: 5.1.1
       resolve-alpn: 1.2.1
     dev: false
+
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /ieee754/1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
