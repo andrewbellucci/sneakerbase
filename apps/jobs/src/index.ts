@@ -20,7 +20,7 @@ import(`./tasks/${job}`)
     process.exit(1);
   });
 
-
+// Kill the process gracefully
 process.on('SIGINT', async function () {
   await schedule.gracefulShutdown();
   process.exit(0);
