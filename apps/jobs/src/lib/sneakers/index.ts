@@ -128,6 +128,7 @@ async function processSneaker(sneaker: SneakerResponse) {
   await processSneakerImage(newSneaker.id);
 }
 
+
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
   await promiseAllInBatches(
     sneaker => processSneaker(sneaker),
