@@ -6,7 +6,7 @@ export default async function (fastify: FastifyInstance) {
     async (request, reply) => {
       try {
         await prisma.$queryRaw`SELECT 1`;
-        reply.status(204);
+        reply.status(200);
       } catch {
         reply.status(500);
       }
