@@ -5,42 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/packages/config/api.tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/config/pkg.tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/utils/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/routes/health.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/routes/health.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/utils/prisma.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/utils/prisma.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/prices.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/prices.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/flight-club.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/flight-club.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/goat.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/goat.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/stockx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/stockx.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/process-prices.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/process-prices.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/sneaker-discovery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/sneaker-discovery.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/sneaker-of-the-day.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/sneaker-of-the-day.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/utils/prisma.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/utils/prisma.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/utils/storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/utils/storage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/config/base.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/config/base.tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/config/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/config/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/src/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/utils/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/packages/utils/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/utils/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/utils/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/utils/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/utils/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.node-version" beforeDir="false" afterPath="$PROJECT_DIR$/.node-version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/config/base.tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/config/base.tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/turbo.json" beforeDir="false" afterPath="$PROJECT_DIR$/turbo.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +135,7 @@
       <workItem from="1679432021567" duration="857000" />
       <workItem from="1679432884472" duration="1172000" />
       <workItem from="1679434064994" duration="1028000" />
-      <workItem from="1679435100977" duration="317000" />
+      <workItem from="1679435100977" duration="5445000" />
     </task>
     <servers />
   </component>
