@@ -1,10 +1,10 @@
 import schedule from "node-schedule";
 import { logger } from "@sneakerbase/utils";
 import { processSneakerImages } from "../lib/images";
-import { EVERY_DAY_AT_5AM } from "../utils/cron";
+import { EVERY_DAY_AT_5PM } from "../utils/cron";
 
 export default function () {
-  schedule.scheduleJob(EVERY_DAY_AT_5AM, async function () {
+  schedule.scheduleJob(EVERY_DAY_AT_5PM, async function () {
     const start = Date.now();
     logger.info("Starting Image Processing of non-processed products");
 

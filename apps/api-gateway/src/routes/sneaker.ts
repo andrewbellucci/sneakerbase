@@ -36,9 +36,10 @@ export default async function (fastify: FastifyInstance) {
           return;
         }
 
-        reply.status(200);
+        reply.status(200).send(product);
 
-        return product;
+        // Register visit
+        await prisma.visit.create({ data: { productId: product.id } });
       } catch {
         reply.status(500);
       }
@@ -71,9 +72,40 @@ export default async function (fastify: FastifyInstance) {
           return;
         }
 
-        reply.status(200);
+        reply.status(200).send(product);
 
-        return product;
+        // Register visit
+        await prisma.visit.create({ data: { productId: product.id } });
+      } catch {
+        reply.status(500);
+      }
+    }
+  );
+
+  fastify.withTypeProvider<ZodTypeProvider>().post('/:slug/visit',
+    {
+      schema: {
+        params: z.object({
+          slug: z.string(),
+        })
+      }
+    },
+    async (request, reply) => {
+      try {
+        const product = await prisma.product.findFirst({
+          where: { slug: request.params.slug },
+          select: { id: true },
+        });
+
+        if (!product) {
+          reply.status(404);
+          return;
+        }
+
+        // Register visit
+        await prisma.visit.create({ data: { productId: product.id } });
+
+        reply.status(200)
       } catch {
         reply.status(500);
       }

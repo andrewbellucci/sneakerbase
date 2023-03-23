@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma";
 import { ImageStatus } from "@sneakerbase/database";
-import { promiseAllInBatches } from "@sneakerbase/utils";
+import { logger, promiseAllInBatches } from "@sneakerbase/utils";
 import { searchStockX } from "../utils/stockx-algolia";
 import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "@sneakerbase/utils";
@@ -73,6 +73,7 @@ export async function processSneakerImage(productId: string) {
       },
     });
   } catch (error) {
+    logger.error(error);
     await prisma.product.update({
       where: { id: existingProduct.id },
       data: { imageStatus: ImageStatus.FAILED },
