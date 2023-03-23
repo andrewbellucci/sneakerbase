@@ -5,6 +5,7 @@ import { prisma } from "../../utils/prisma";
 import { isPlaceholderImage } from "../../utils/is-placeholder-image";
 import { processSneakerImage } from "../images";
 import { handlePriceProcessing } from "../prices";
+import slugify from "slugify";
 
 async function getSneakerTraits(term = ''): Promise<string[]> {
   const response = await searchStockX(term);
@@ -106,15 +107,30 @@ async function processSneaker(sneaker: SneakerResponse) {
 
   const imageUrl = sneaker.thumbnail_url || sneaker.media.imageUrl;
 
+  let slugExists = false;
+  let iteration = 0;
+  let slug = slugify(sneaker.name);
+  do {
+    slugExists = !!(await prisma.product.findFirst({
+      where: { slug }
+    }));
+
+    if (slugExists) {
+      slug = `${slug}-${iteration}`;
+      iteration++;
+    }
+  } while (slugExists);
+
   const newSneaker = await prisma.product.create({
     data: {
       title: sneaker.name,
       description: sneaker.description,
+      slug,
       colorWay: sneaker.colorway,
       make: sneaker.make,
       retailPrice: sneaker.price,
       sku: sneaker.style_id,
-      isPlaceholder: isPlaceholderImage(sneaker.thumbnail_url || sneaker.media.imageUrl),
+      isPlaceholder: isPlaceholderImage(imageUrl),
       releaseDate: sneaker.release_date && sneaker.release_date.trim() !== ''
         ? new Date(sneaker.release_date)
         : null,

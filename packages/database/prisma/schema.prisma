@@ -27,14 +27,15 @@ model Product {
   make                    String
   retailPrice             Float
   sku                     String                          @unique
+  slug                    String                          @unique
   releaseDate             DateTime?
   previewImageUrl         String                          @db.VarChar(500)
   description             String                          @db.VarChar(2000)
   isPlaceholder           Boolean                         @default(false)
   imageStatus             ImageStatus                     @default(PENDING)
-  stockXUrl               String?                         @db.VarChar(500)
-  goatUrl                 String?                         @db.VarChar(500)
-  flightClubUrl           String?                         @db.VarChar(500)
+  stockXUrl               String?                         @db.VarChar(500) @unique
+  goatUrl                 String?                         @db.VarChar(500) @unique
+  flightClubUrl           String?                         @db.VarChar(500) @unique
   derivedColor            String?
   derivedSecondaryColor   String?
   prices                  Price[]

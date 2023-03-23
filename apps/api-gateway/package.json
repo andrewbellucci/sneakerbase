@@ -14,14 +14,16 @@
     "@fastify/redis": "^6.1.0",
     "@fastify/swagger": "^8.3.1",
     "@fastify/swagger-ui": "^1.5.0",
+    "@sneakerbase/config": "workspace:*",
+    "@sneakerbase/database": "workspace:*",
+    "@sneakerbase/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "fastify": "^4.14.1",
     "fastify-type-provider-zod": "^1.1.9",
     "http-errors": "^2.0.0",
     "pino": "^8.11.0",
-    "zod": "^3.21.4",
-    "@sneakerbase/config": "workspace:*",
-    "@sneakerbase/database": "workspace:*"
+    "slugify": "^1.6.5",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "pino-pretty": "^10.0.0",

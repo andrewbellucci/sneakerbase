@@ -26,12 +26,14 @@ importers:
       '@fastify/swagger-ui': ^1.5.0
       '@sneakerbase/config': workspace:*
       '@sneakerbase/database': workspace:*
+      '@sneakerbase/utils': workspace:*
       dotenv: ^16.0.3
       fastify: ^4.14.1
       fastify-type-provider-zod: ^1.1.9
       http-errors: ^2.0.0
       pino: ^8.11.0
       pino-pretty: ^10.0.0
+      slugify: ^1.6.5
       ts-node: ^10.9.1
       ts-node-dev: ^2.0.0
       typescript: ^5.0.2
@@ -46,11 +48,13 @@ importers:
       '@fastify/swagger-ui': 1.5.0
       '@sneakerbase/config': link:../../packages/config
       '@sneakerbase/database': link:../../packages/database
+      '@sneakerbase/utils': link:../../packages/utils
       dotenv: 16.0.3
       fastify: 4.15.0
       fastify-type-provider-zod: 1.1.9_fastify@4.15.0+zod@3.21.4
       http-errors: 2.0.0
       pino: 8.11.0
+      slugify: 1.6.5
       zod: 3.21.4
     devDependencies:
       pino-pretty: 10.0.0
@@ -79,6 +83,7 @@ importers:
       node-vibrant: 3.2.1-alpha.1
       pino: ^8.11.0
       promise-retry: ^2.0.1
+      slugify: ^1.6.5
       ts-node: ^10.9.1
       ts-node-dev: ^2.0.0
       typescript: ^5.0.2
@@ -100,6 +105,7 @@ importers:
       node-vibrant: 3.2.1-alpha.1
       pino: 8.11.0
       promise-retry: 2.0.1
+      slugify: 1.6.5
       zod: 3.21.4
     devDependencies:
       '@types/command-line-args': 5.2.0
@@ -3556,6 +3562,11 @@ packages:
 
   /setprototypeof/1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
+    dev: false
+
+  /slugify/1.6.5:
+    resolution: {integrity: sha512-8mo9bslnBO3tr5PEVFzMPIWwWnipGS0xVbYf65zxDqfNwmzYn1LpiKNrR6DlClusuvo+hDHd1zKpmfAe83NQSQ==}
+    engines: {node: '>=8.0.0'}
     dev: false
 
   /sonic-boom/3.3.0:
