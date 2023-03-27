@@ -3,6 +3,7 @@ import { prisma } from "../../../utils/prisma";
 import { Store } from "@sneakerbase/database";
 import { searchStockX } from "../../../utils/stockx-algolia";
 import { Price } from "../types";
+import { Sentry } from "src/utils/sentry";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloudscraper = require("cloudscraper");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -21,54 +22,57 @@ export interface StockxProductData {
 }
 
 export async function processPricing(productId: string): Promise<void> {
-
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-    select: { id: true, sku: true, stockXUrl: true },
-  });
-
-  if (!product) throw Error(`Product with id "${productId}" does not exist.`);
-
-  const { prices, url } = await getPricesAndUrl(product.sku);
-
-  if (product.stockXUrl !== url) {
-    await prisma.product.update({
+  try {
+    const product = await prisma.product.findUnique({
       where: { id: productId },
-      data: { stockXUrl: url }
+      select: { id: true, sku: true, stockXUrl: true },
     });
-  }
 
-  const pricesStored = await prisma.price.findMany({
-    where: {
-      productId,
-      store: Store.STOCKX,
-    },
-    select: { id: true, store: true, size: true, price: true },
-    orderBy: { createdAt: 'desc' },
-    distinct: ['store', 'size']
-  });
+    if (!product) throw Error(`Product with id "${productId}" does not exist.`);
 
-  await Promise.all(prices.map(async price => {
-    const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
-    if (!priceStored) {
-      await prisma.price.create({
-        data: {
-          productId,
-          store: Store.STOCKX,
-          size: price.size,
-          price: price.price,
-        }
-      });
-    } else {
-      await prisma.price.update({
-        where: { id: priceStored.id },
-        data: {
-          price: price.price,
-          change: price.price - priceStored.price,
-        }
+    const { prices, url } = await getPricesAndUrl(product.sku);
+
+    if (product.stockXUrl !== url) {
+      await prisma.product.update({
+        where: { id: productId },
+        data: { stockXUrl: url }
       });
     }
-  }));
+
+    const pricesStored = await prisma.price.findMany({
+      where: {
+        productId,
+        store: Store.STOCKX,
+      },
+      select: { id: true, store: true, size: true, price: true },
+      orderBy: { createdAt: 'desc' },
+      distinct: ['store', 'size']
+    });
+
+    await Promise.all(prices.map(async price => {
+      const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
+      if (!priceStored) {
+        await prisma.price.create({
+          data: {
+            productId,
+            store: Store.STOCKX,
+            size: price.size,
+            price: price.price,
+          }
+        });
+      } else {
+        await prisma.price.update({
+          where: { id: priceStored.id },
+          data: {
+            price: price.price,
+            change: price.price - priceStored.price,
+          }
+        });
+      }
+    }));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {

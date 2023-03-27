@@ -7,58 +7,62 @@ const cloudscraper = require("cloudscraper");
 const promiseRetry = require("promise-retry");
 import axios from "axios";
 import { Price } from "../types";
+import { Sentry } from "src/utils/sentry";
 
 const productDataEndpoint = 'https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%20(lite)%203.25.1%3Breact%20(16.9.0)%3Breact-instantsearch%20(6.2.0)%3BJS%20Helper%20(3.1.0)&x-algolia-application-id=2FWOTDVM2O&x-algolia-api-key=ac96de6fef0e02bb95d433d8d5c7038a';
 
 export async function processPricing(productId: string): Promise<void> {
-
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-    select: { id: true, sku: true, goatUrl: true },
-  });
-
-  if (!product) throw new Error(`Product with id ${productId} not found`);
-
-  const { prices, url } = await getPricesAndUrl(product.sku);
-
-  if (product.goatUrl !== url) {
-    await prisma.product.update({
+  try {
+    const product = await prisma.product.findUnique({
       where: { id: productId },
-      data: { goatUrl: url }
+      select: { id: true, sku: true, goatUrl: true },
     });
-  }
 
-  const pricesStored = await prisma.price.findMany({
-    where: {
-      productId,
-      store: Store.GOAT,
-    },
-    select: { id: true, store: true, size: true, price: true },
-    orderBy: { createdAt: 'desc' },
-    distinct: ['store', 'size']
-  });
+    if (!product) throw new Error(`Product with id ${productId} not found`);
 
-  await Promise.all(prices.map(async price => {
-    const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
-    if (!priceStored) {
-      await prisma.price.create({
-        data: {
-          productId,
-          store: Store.GOAT,
-          size: price.size,
-          price: price.price,
-        }
-      });
-    } else {
-      await prisma.price.update({
-        where: { id: priceStored.id },
-        data: {
-          price: price.price,
-          change: price.price - priceStored.price,
-        }
+    const { prices, url } = await getPricesAndUrl(product.sku);
+
+    if (product.goatUrl !== url) {
+      await prisma.product.update({
+        where: { id: productId },
+        data: { goatUrl: url }
       });
     }
-  }));
+
+    const pricesStored = await prisma.price.findMany({
+      where: {
+        productId,
+        store: Store.GOAT,
+      },
+      select: { id: true, store: true, size: true, price: true },
+      orderBy: { createdAt: 'desc' },
+      distinct: ['store', 'size']
+    });
+
+    await Promise.all(prices.map(async price => {
+      const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
+      if (!priceStored) {
+        await prisma.price.create({
+          data: {
+            productId,
+            store: Store.GOAT,
+            size: price.size,
+            price: price.price,
+          }
+        });
+      } else {
+        await prisma.price.update({
+          where: { id: priceStored.id },
+          data: {
+            price: price.price,
+            change: price.price - priceStored.price,
+          }
+        });
+      }
+    }));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {

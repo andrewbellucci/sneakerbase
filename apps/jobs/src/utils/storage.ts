@@ -18,8 +18,8 @@ export async function uploadFile(
 ) {
   return await uploadS3(
     buffer,
-    spaceName + '/' + bucketName,
-    fileName,
+    spaceName,
+     bucketName + '/' + fileName,
     contentType,
   );
 }
@@ -28,7 +28,10 @@ export async function removeFile(
   fileName: string,
   bucketName: string,
 ) {
-  return await removeS3(spaceName + '/' + bucketName, fileName);
+  return await removeS3(
+    spaceName,
+    bucketName + '/' + fileName
+  );
 }
 
 function uploadS3(

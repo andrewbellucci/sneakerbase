@@ -5,60 +5,64 @@ import { generateProxy } from "../../../utils/generate-proxy";
 const promiseRetry = require("promise-retry");
 import axios from "axios";
 import { Price } from "../types";
+import { Sentry } from "src/utils/sentry";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const got = require("fix-esm").require('got');
 
 const productDataEndpoint = 'https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(3.35.1)%3B%20Browser%20(lite)%3B%20react%20(16.13.1)%3B%20react-instantsearch%20(5.7.0)%3B%20JS%20Helper%20(2.28.1)&x-algolia-application-id=2FWOTDVM2O&x-algolia-api-key=ac96de6fef0e02bb95d433d8d5c7038a';
 
 export async function processPricing(productId: string): Promise<void> {
-
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-    select: { id: true, sku: true, flightClubUrl: true },
-  });
-
-  if (!product) throw new Error('Product not found: ' + productId);
-
-  const { prices, url } = await getPricesAndUrl(product.sku);
-
-  if (product.flightClubUrl !== url) {
-    await prisma.product.update({
+  try {
+    const product = await prisma.product.findUnique({
       where: { id: productId },
-      data: { flightClubUrl: url }
+      select: { id: true, sku: true, flightClubUrl: true },
     });
-  }
 
-  const pricesStored = await prisma.price.findMany({
-    where: {
-      productId,
-      store: Store.FLIGHTCLUB,
-    },
-    select: { id: true, store: true, size: true, price: true },
-    orderBy: { createdAt: 'desc' },
-    distinct: ['store', 'size']
-  });
+    if (!product) throw new Error('Product not found: ' + productId);
 
-  await Promise.all(prices.map(async price => {
-    const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
-    if (!priceStored) {
-      await prisma.price.create({
-        data: {
-          productId,
-          store: Store.FLIGHTCLUB,
-          size: price.size,
-          price: price.price,
-        }
-      });
-    } else {
-      await prisma.price.update({
-        where: { id: priceStored.id },
-        data: {
-          price: price.price,
-          change: price.price - priceStored.price,
-        }
+    const { prices, url } = await getPricesAndUrl(product.sku);
+
+    if (product.flightClubUrl !== url) {
+      await prisma.product.update({
+        where: { id: productId },
+        data: { flightClubUrl: url }
       });
     }
-  }));
+
+    const pricesStored = await prisma.price.findMany({
+      where: {
+        productId,
+        store: Store.FLIGHTCLUB,
+      },
+      select: { id: true, store: true, size: true, price: true },
+      orderBy: { createdAt: 'desc' },
+      distinct: ['store', 'size']
+    });
+
+    await Promise.all(prices.map(async price => {
+      const priceStored = pricesStored.find(priceStored => priceStored.size === price.size);
+      if (!priceStored) {
+        await prisma.price.create({
+          data: {
+            productId,
+            store: Store.FLIGHTCLUB,
+            size: price.size,
+            price: price.price,
+          }
+        });
+      } else {
+        await prisma.price.update({
+          where: { id: priceStored.id },
+          data: {
+            price: price.price,
+            change: price.price - priceStored.price,
+          }
+        });
+      }
+    }));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {

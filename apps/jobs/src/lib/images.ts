@@ -6,6 +6,7 @@ import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "@sneakerbase/utils";
 import { downloadImage } from "@sneakerbase/utils";
 import { uploadFile } from "../utils/storage";
+import { Sentry } from "src/utils/sentry";
 const Vibrant = require('node-vibrant');
 
 const ImageNeedsProcessing = {
@@ -74,6 +75,7 @@ export async function processSneakerImage(productId: string) {
     });
   } catch (error) {
     logger.error(error);
+    Sentry.captureException(error);
     await prisma.product.update({
       where: { id: existingProduct.id },
       data: { imageStatus: ImageStatus.FAILED },
