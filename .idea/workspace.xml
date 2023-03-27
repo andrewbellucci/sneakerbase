@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/routes/web-data.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/routes/sneaker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/routes/sneaker.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/utils/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/utils/env.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/utils/cron.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/utils/cron.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +150,8 @@
       <workItem from="1679515566363" duration="4621000" />
       <workItem from="1679533148279" duration="2236000" />
       <workItem from="1679599263578" duration="383000" />
-      <workItem from="1679599652036" duration="3404000" />
+      <workItem from="1679599652036" duration="4140000" />
+      <workItem from="1679942836827" duration="4336000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1679459407806</created>

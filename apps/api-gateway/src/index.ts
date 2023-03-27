@@ -18,6 +18,7 @@ async function startServer() {
     // Plugins
     server.register(require('@fastify/cors'), { origin: '*' });
     server.register(require('@fastify/helmet'));
+    server.register(require('@immobiliarelabs/fastify-sentry'), { dsn: env.SENTRY_DSN });
 
     // Swagger Docs
     server.register(fastifySwagger, {
