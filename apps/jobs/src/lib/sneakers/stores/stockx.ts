@@ -3,7 +3,7 @@ import { prisma } from "../../../utils/prisma";
 import { Store } from "@sneakerbase/database";
 import { searchStockX } from "../../../utils/stockx-algolia";
 import { Price } from "../types";
-import { Sentry } from "src/utils/sentry";
+import { Sentry } from "../../../utils/sentry";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloudscraper = require("cloudscraper");
 // eslint-disable-next-line @typescript-eslint/no-var-requires

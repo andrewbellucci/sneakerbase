@@ -1,11 +1,11 @@
 import { defaultStockXAlgoliaOptions, searchStockX, SneakerResponse } from "../../utils/stockx-algolia";
-import { Store } from "@sneakerbase/database";
 import { promiseAllInBatches } from "@sneakerbase/utils";
 import { prisma } from "../../utils/prisma";
 import { isPlaceholderImage } from "../../utils/is-placeholder-image";
 import { processSneakerImage } from "../images";
 import { handlePriceProcessing } from "../prices";
 import slugify from "slugify";
+import { Sentry } from "../../utils/sentry";
 
 async function getSneakerTraits(term = ''): Promise<string[]> {
   const response = await searchStockX(term);
@@ -144,7 +144,6 @@ async function processSneaker(sneaker: SneakerResponse) {
   await processSneakerImage(newSneaker.id);
 }
 
-
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
   await promiseAllInBatches(
     sneaker => processSneaker(sneaker),
@@ -154,23 +153,27 @@ export async function processSneakersFound(sneakers: SneakerResponse[]) {
 }
 
 export async function pickSneakerOfTheDay() {
-  const sneakersAvailable = await prisma.product.count({
-    where: {
-      isPlaceholder: false,
-    }
-  });
-  const randomIndex = Math.floor(Math.random() * sneakersAvailable);
-  const sneaker = await prisma.product.findFirst({
-    take: 5,
-    skip: randomIndex,
-    where: {
-      isPlaceholder: false,
-    }
-  });
+  try {
+    const sneakersAvailable = await prisma.product.count({
+      where: {
+        isPlaceholder: false,
+      }
+    });
+    const randomIndex = Math.floor(Math.random() * sneakersAvailable);
+    const sneaker = await prisma.product.findFirst({
+      take: 5,
+      skip: randomIndex,
+      where: {
+        isPlaceholder: false,
+      }
+    });
 
-  if (!sneaker) return;
+    if (!sneaker) return;
 
-  await prisma.sneakerOfTheDay.create({
-    data: { productId: sneaker.id }
-  });
+    await prisma.sneakerOfTheDay.create({
+      data: { productId: sneaker.id }
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }

@@ -7,7 +7,7 @@ const cloudscraper = require("cloudscraper");
 const promiseRetry = require("promise-retry");
 import axios from "axios";
 import { Price } from "../types";
-import { Sentry } from "src/utils/sentry";
+import { Sentry } from "../../../utils/sentry";
 
 const productDataEndpoint = 'https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%20(lite)%203.25.1%3Breact%20(16.9.0)%3Breact-instantsearch%20(6.2.0)%3BJS%20Helper%20(3.1.0)&x-algolia-application-id=2FWOTDVM2O&x-algolia-api-key=ac96de6fef0e02bb95d433d8d5c7038a';
 

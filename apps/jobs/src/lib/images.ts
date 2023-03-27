@@ -6,7 +6,7 @@ import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "@sneakerbase/utils";
 import { downloadImage } from "@sneakerbase/utils";
 import { uploadFile } from "../utils/storage";
-import { Sentry } from "src/utils/sentry";
+import { Sentry } from "../utils/sentry";
 const Vibrant = require('node-vibrant');
 
 const ImageNeedsProcessing = {

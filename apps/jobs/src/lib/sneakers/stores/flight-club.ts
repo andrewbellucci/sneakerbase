@@ -5,7 +5,7 @@ import { generateProxy } from "../../../utils/generate-proxy";
 const promiseRetry = require("promise-retry");
 import axios from "axios";
 import { Price } from "../types";
-import { Sentry } from "src/utils/sentry";
+import { Sentry } from "../../../utils/sentry";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const got = require("fix-esm").require('got');
 
