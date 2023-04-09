@@ -18,7 +18,7 @@ export async function processPricing(productId: string): Promise<void> {
       select: { id: true, sku: true, goatUrl: true },
     });
 
-    if (!product) throw new Error(`Product with id ${productId} not found`);
+    if (!product) return;
 
     const { prices, url } = await getPricesAndUrl(product.sku);
 

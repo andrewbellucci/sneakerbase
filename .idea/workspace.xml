@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test" />
+    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/flight-club.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/sneakers/stores/flight-club.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +21,9 @@
         <option value="TypeScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
@@ -36,9 +42,17 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;NIXITCH_NIXPKGS_CONFIG&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_CONF_DIR&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_OTHER_STORES&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_PATH&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_PROFILES&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_REMOTE&quot;: &quot;&quot;,
+    &quot;NIXITCH_NIX_USER_PROFILE_DIR&quot;: &quot;&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/apps/jobs&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -46,7 +60,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;AtomConfig&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Font&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -145,7 +159,11 @@
       <workItem from="1679533148279" duration="2236000" />
       <workItem from="1679599263578" duration="383000" />
       <workItem from="1679599652036" duration="4140000" />
-      <workItem from="1679942836827" duration="5314000" />
+      <workItem from="1679942836827" duration="5915000" />
+      <workItem from="1681063809633" duration="965000" />
+      <workItem from="1681065681493" duration="38000" />
+      <workItem from="1681065721260" duration="35000" />
+      <workItem from="1681065758322" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1679459407806</created>
@@ -159,15 +177,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/packages/utils/src/index.js" />
-        <option value="$PROJECT_DIR$/packages/utils/src/transform-product-image-url.js" />
-        <option value="$PROJECT_DIR$/packages/utils/src/download-image.js" />
-        <option value="$PROJECT_DIR$/packages/utils/src/promise-all-in-batches.js" />
-        <option value="$PROJECT_DIR$/packages/utils/src/logger.js" />
-      </list>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />

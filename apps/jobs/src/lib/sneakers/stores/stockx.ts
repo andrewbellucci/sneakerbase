@@ -28,7 +28,7 @@ export async function processPricing(productId: string): Promise<void> {
       select: { id: true, sku: true, stockXUrl: true },
     });
 
-    if (!product) throw Error(`Product with id "${productId}" does not exist.`);
+    if (!product) return;
 
     const { prices, url } = await getPricesAndUrl(product.sku);
 

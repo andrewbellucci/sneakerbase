@@ -7,7 +7,7 @@ import axios from "axios";
 import { Price } from "../types";
 import { Sentry } from "../../../utils/sentry";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const got = require("fix-esm").require('got');
+const { got } = require("fix-esm").require('got');
 
 const productDataEndpoint = 'https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(3.35.1)%3B%20Browser%20(lite)%3B%20react%20(16.13.1)%3B%20react-instantsearch%20(5.7.0)%3B%20JS%20Helper%20(2.28.1)&x-algolia-application-id=2FWOTDVM2O&x-algolia-api-key=ac96de6fef0e02bb95d433d8d5c7038a';
 
@@ -18,7 +18,7 @@ export async function processPricing(productId: string): Promise<void> {
       select: { id: true, sku: true, flightClubUrl: true },
     });
 
-    if (!product) throw new Error('Product not found: ' + productId);
+    if (!product) return;
 
     const { prices, url } = await getPricesAndUrl(product.sku);
 

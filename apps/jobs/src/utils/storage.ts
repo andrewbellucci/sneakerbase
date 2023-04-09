@@ -7,7 +7,8 @@ const s3 = new S3Client({
   credentials: {
     accessKeyId: env.SPACES_ACCESS_KEY,
     secretAccessKey: env.SPACES_SECRET_KEY,
-  }
+  },
+  region: 'us-east-1',
 });
 
 export async function uploadFile(
