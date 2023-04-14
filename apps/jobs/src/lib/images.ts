@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma";
 import { ImageStatus } from "@sneakerbase/database";
-import { logger, promiseAllInBatches } from "@sneakerbase/utils";
+import { logger, promiseAllInBatches, promiseAllSettledInBatches } from "@sneakerbase/utils";
 import { searchStockX } from "../utils/stockx-algolia";
 import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "@sneakerbase/utils";
@@ -98,7 +98,7 @@ export async function processSneakerImages() {
     where: ImageNeedsProcessing,
   });
 
-  await promiseAllInBatches(
+  await promiseAllSettledInBatches(
     async product => await processSneakerImage(product.id),
     products,
     25,

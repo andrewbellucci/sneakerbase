@@ -1,4 +1,4 @@
-import { promiseAllInBatches } from "@sneakerbase/utils";
+import { promiseAllInBatches, promiseAllSettledInBatches } from "@sneakerbase/utils";
 import { prisma } from "../utils/prisma";
 import { processPricing as stockXProcessPricing } from './sneakers/stores/stockx';
 import { processPricing as goatProcessPricing } from './sneakers/stores/goat';
@@ -22,7 +22,7 @@ export async function processAllSneakerPrices() {
     select: { id: true },
   });
 
-  await promiseAllInBatches(
+  await promiseAllSettledInBatches(
     (sneaker) => handlePriceProcessing(sneaker.id),
     sneakers,
     50
