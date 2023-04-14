@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-image.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/process-prices.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/routes/web-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/routes/web-data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/database/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/packages/database/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/images.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/src/lib/prices.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/lib/prices.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/src/utils/storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/utils/storage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,48 +46,48 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;NIXITCH_NIXPKGS_CONFIG&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_CONF_DIR&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_OTHER_STORES&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_PATH&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_PROFILES&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_REMOTE&quot;: &quot;&quot;,
-    &quot;NIXITCH_NIX_USER_PROFILE_DIR&quot;: &quot;&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/apps/jobs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Font&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "NIXITCH_NIXPKGS_CONFIG": "",
+    "NIXITCH_NIX_CONF_DIR": "",
+    "NIXITCH_NIX_OTHER_STORES": "",
+    "NIXITCH_NIX_PATH": "",
+    "NIXITCH_NIX_PROFILES": "",
+    "NIXITCH_NIX_REMOTE": "",
+    "NIXITCH_NIX_USER_PROFILE_DIR": "",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/andrewbellucci/Projects/sneakerbase/backend/apps/jobs/src/tasks",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/prettier",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font",
+    "ts.external.directory.path": "/Users/andrewbellucci/Projects/sneakerbase/backend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
       <recent name="$PROJECT_DIR$/apps/jobs" />
       <recent name="$PROJECT_DIR$/packages/utils/src" />
       <recent name="$PROJECT_DIR$/packages/utils" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/utils" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
+      <recent name="$PROJECT_DIR$/apps/jobs/src" />
       <recent name="$PROJECT_DIR$/apps/api-gateway" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/utils" />
-      <recent name="$PROJECT_DIR$/apps/jobs/src/lib/sneakers" />
-      <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.test:ui">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/apps/api-gateway/package.json" />
       <command value="run" />
@@ -103,8 +108,19 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test:ui" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/apps/jobs/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test:ui" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.test:ui" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.build" />
       </list>
@@ -167,6 +183,9 @@
       <workItem from="1681065758322" duration="19000" />
       <workItem from="1681065779312" duration="4950000" />
       <workItem from="1681071652972" duration="2075000" />
+      <workItem from="1681329270568" duration="2875000" />
+      <workItem from="1681403893654" duration="24000" />
+      <workItem from="1681417970220" duration="6074000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1679459407806</created>

@@ -3,27 +3,13 @@ import { env } from "./env";
 
 const spaceName = 'sneakerbase';
 const s3 = new S3Client({
-  endpoint: '990780148d62a437b13e976156284680.r2.cloudflarestorage.com',
+  endpoint: 'https://990780148d62a437b13e976156284680.r2.cloudflarestorage.com',
   credentials: {
     accessKeyId: env.SPACES_ACCESS_KEY,
     secretAccessKey: env.SPACES_SECRET_KEY,
   },
-  region: 'us-east-1',
+  region: 'auto',
 });
-
-export async function uploadFile(
-  buffer: Buffer,
-  fileName: string,
-  bucketName: string,
-  contentType?: string,
-) {
-  return await uploadS3(
-    buffer,
-    spaceName,
-     bucketName + '/' + fileName,
-    contentType,
-  );
-}
 
 export async function removeFile(
   fileName: string,
@@ -35,7 +21,7 @@ export async function removeFile(
   );
 }
 
-function uploadS3(
+export function uploadS3(
   file: Buffer,
   bucket: string,
   name: string,

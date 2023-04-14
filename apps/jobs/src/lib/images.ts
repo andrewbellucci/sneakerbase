@@ -5,7 +5,7 @@ import { searchStockX } from "../utils/stockx-algolia";
 import { isPlaceholderImage } from "../utils/is-placeholder-image";
 import { transformProductImageUrl } from "@sneakerbase/utils";
 import { downloadImage } from "@sneakerbase/utils";
-import { uploadFile } from "../utils/storage";
+import { uploadS3 } from "../utils/storage";
 import { Sentry } from "../utils/sentry";
 const Vibrant = require('node-vibrant');
 
@@ -19,7 +19,7 @@ const ImageNeedsProcessing = {
   ],
 };
 
-const bucketName = 'products';
+const bucketName = 'sneakerbase';
 
 export async function processSneakerImage(productId: string) {
   const existingProduct = await prisma.product.findFirst({
@@ -27,25 +27,29 @@ export async function processSneakerImage(productId: string) {
     where: { id: productId },
   });
 
-  if (!existingProduct) return;
+  if (!existingProduct) return false;
+  if (existingProduct.imageStatus === ImageStatus.PROCESSED) return true;
 
   try {
     // Double check that the image hasn't already been processed
     const foundProducts = await searchStockX(existingProduct.sku);
 
-    if (!existingProduct || !foundProducts.hits[0]) return;
+    if (!existingProduct || !foundProducts.hits[0]) return false;
 
     const foundProduct = foundProducts.hits[0];
     const imageUrl = foundProduct.media.imageUrl || foundProduct.thumbnail_url;
 
     // Skip placeholder images
-    if (isPlaceholderImage(imageUrl)) return await prisma.product.update({
-      where: { id: existingProduct.id },
-      data: {
-        isPlaceholder: true,
-        imageStatus: ImageStatus.HAS_PLACEHOLDER,
-      },
-    });
+    if (isPlaceholderImage(imageUrl)) {
+      await prisma.product.update({
+        where: { id: existingProduct.id },
+        data: {
+          isPlaceholder: true,
+          imageStatus: ImageStatus.HAS_PLACEHOLDER,
+        },
+      });
+      return false;
+    }
 
     // Transform URL for proper processing
     const transformedUrl = transformProductImageUrl(imageUrl);
@@ -58,9 +62,9 @@ export async function processSneakerImage(productId: string) {
     const colorPalette = await Vibrant.from(transformedUrl).getPalette();
 
     // Upload image to Storage Service
-    await uploadFile(downloadedImage, imageName, bucketName, 'image/png');
+    await uploadS3(downloadedImage, bucketName, 'products/' + imageName, 'image/png');
 
-    const imageLink = `https://cdn.sneakerbase.io/${bucketName}/${imageName}`;
+    const imageLink = `https://cdn.sneakerbase.io/products/${imageName}`;
 
     // Update product with new URL, derived color hex, and processedImage columns
     await prisma.product.update({
@@ -73,6 +77,8 @@ export async function processSneakerImage(productId: string) {
         isPlaceholder: false,
       },
     });
+
+    return true;
   } catch (error) {
     logger.error(error);
     Sentry.captureException(error);
@@ -80,6 +86,8 @@ export async function processSneakerImage(productId: string) {
       where: { id: existingProduct.id },
       data: { imageStatus: ImageStatus.FAILED },
     });
+
+    return false;
   }
 }
 
