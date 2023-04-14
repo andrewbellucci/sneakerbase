@@ -1,10 +1,10 @@
 import { logger } from "@sneakerbase/utils";
 import { processAllSneakerPrices } from "../lib/prices";
 import schedule from "node-schedule";
-import { EVERY_MONDAY_AT_MIDNIGHT } from "../utils/cron";
+import { EVERY_FRIDAY_AT_3PM } from "../utils/cron";
 
 export default async function () {
-  schedule.scheduleJob(EVERY_MONDAY_AT_MIDNIGHT, async function () {
+  schedule.scheduleJob(EVERY_FRIDAY_AT_3PM, async function () {
     const start = Date.now();
     logger.info("Starting Processing of all Sneaker Prices");
 
