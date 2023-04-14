@@ -1,6 +1,7 @@
 type Task<I> = (item: I) => unknown;
 
-export const promiseAllInBatches = async <I, R>(
+// convert the above to all settled
+export const promiseAllSettledInBatches = async <I, R>(
   task: Task<I>,
   items: I[],
   batchSize: number,
@@ -12,10 +13,19 @@ export const promiseAllInBatches = async <I, R>(
     const itemsForBatch = items.slice(position, position + batchSize);
     results = [
       ...results,
-      ...((await Promise.all(itemsForBatch.map((item) => task(item)))) as R[]),
+      ...(await Promise.allSettled(
+        itemsForBatch.map(
+          (item) => task(item)
+        )
+      ))
+        .filter(result => result.status === 'fulfilled')
+        .map((result) => {
+          const r = result as PromiseFulfilledResult<R>;
+          return r.value;
+        }),
     ];
     position += batchSize;
   }
 
   return results;
-};
+}
