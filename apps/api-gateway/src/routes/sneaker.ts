@@ -111,4 +111,21 @@ export default async function (fastify: FastifyInstance) {
       }
     }
   );
+
+  fastify.withTypeProvider<ZodTypeProvider>().get('/sneakers-without-prices',
+    async (request, reply) => {
+      try {
+        // get products without prices
+        const products = await prisma.product.findMany({
+          where: {
+            prices: { none: {} },
+          }
+        });
+
+        reply.status(200).send(products.length);
+      } catch {
+        reply.status(500);
+      }
+    }
+  );
 }
