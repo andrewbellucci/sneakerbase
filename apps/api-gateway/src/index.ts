@@ -37,6 +37,7 @@ async function startServer() {
     // Routes
     server.register(require('./routes/health'), { prefix: '/health' });
     server.register(require('./routes/sneaker'), { prefix: '/sneaker' });
+    server.register(require('./routes/web-data'), { prefix: '/web-data' });
 
     await server.listen(env.PORT, "0.0.0.0");
   } catch (e) {
