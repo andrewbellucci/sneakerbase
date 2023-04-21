@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { prisma } from "../utils/prisma";
-import { handlePriceProcessing } from "src/lib/prices";
+import { handlePriceProcessing } from "../lib/prices";
 
 test("with price processing for a sneaker", async () => {
   const firstProduct = await prisma.product.findFirst();

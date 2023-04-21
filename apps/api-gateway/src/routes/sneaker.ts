@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../utils/prisma";
 import z from 'zod';
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { logger } from "@sneakerbase/utils";
 
 export default async function (fastify: FastifyInstance) {
   fastify.withTypeProvider<ZodTypeProvider>().get('/url-lookup',
@@ -123,7 +124,8 @@ export default async function (fastify: FastifyInstance) {
         });
 
         reply.status(200).send(products.length);
-      } catch {
+      } catch(err) {
+        logger.error(err);
         reply.status(500);
       }
     }

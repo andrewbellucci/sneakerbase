@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/apps/jobs/src/run-price-processing.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/routes/sneaker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/routes/sneaker.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/process-prices.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/process-prices.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +55,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/packages/utils/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/andrewbellucci/Projects/sneakerbase/backend/apps/jobs/src&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -67,11 +69,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/jobs/src" />
       <recent name="$PROJECT_DIR$/packages/utils/src" />
       <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
       <recent name="$PROJECT_DIR$/apps/jobs" />
       <recent name="$PROJECT_DIR$/packages/utils" />
-      <recent name="$PROJECT_DIR$/apps/jobs/src/utils" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/jobs/src/tasks" />
@@ -182,7 +184,9 @@
       <workItem from="1681417970220" duration="9329000" />
       <workItem from="1681487715427" duration="844000" />
       <workItem from="1681490056540" duration="1029000" />
-      <workItem from="1681499937782" duration="1529000" />
+      <workItem from="1681499937782" duration="3971000" />
+      <workItem from="1681678328600" duration="951000" />
+      <workItem from="1681826284889" duration="659000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1679459407806</created>
