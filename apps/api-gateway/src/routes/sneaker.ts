@@ -15,14 +15,45 @@ export default async function (fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
+        const url = request.query.url;
         const product = await prisma.product.findFirst({
+          select: { slug: true, id: true },
           where: {
             OR: [
-              { stockXUrl: request.query.url },
-              { goatUrl: request.query.url },
-              { flightClubUrl: request.query.url },
+              { stockXUrl: url },
+              { goatUrl: url },
+              { flightClubUrl: url },
             ]
           },
+        });
+
+        if (!product) {
+          reply.status(404);
+          return;
+        }
+
+        reply.status(200).send({ slug: product.slug });
+
+        // Register visit
+        await prisma.visit.create({ data: { productId: product.id } });
+      } catch {
+        reply.status(500);
+      }
+    }
+  );
+
+  fastify.withTypeProvider<ZodTypeProvider>().get('/:id',
+    {
+      schema: {
+        params: z.object({
+          id: z.string(),
+        })
+      }
+    },
+    async (request, reply) => {
+      try {
+        const product = await prisma.product.findFirst({
+          where: { id: request.params.id },
           include: {
             prices: {
               select: { id: true, store: true, size: true, price: true },
@@ -40,14 +71,15 @@ export default async function (fastify: FastifyInstance) {
         reply.status(200).send(product);
 
         // Register visit
-        await prisma.visit.create({ data: { productId: product.id } });
-      } catch {
+        await prisma.visit.create({ data: { productId: request.params.id } });
+      } catch(e) {
+        logger.error(e);
         reply.status(500);
       }
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/:slug',
+  fastify.withTypeProvider<ZodTypeProvider>().get('/slug/:slug',
     {
       schema: {
         params: z.object({
@@ -83,7 +115,7 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().post('/:slug/visit',
+  fastify.withTypeProvider<ZodTypeProvider>().post('/slug/:slug/visit',
     {
       schema: {
         params: z.object({

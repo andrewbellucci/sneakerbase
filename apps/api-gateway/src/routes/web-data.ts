@@ -23,18 +23,19 @@ export default async function (fastify: FastifyInstance) {
         });
 
         const products = await prisma.product.findMany({
+          // TODO: limit the amount of
           where: {
             id: {
               in: productVisitCounts.map(p => p.productId)
             }
           },
-          include: {
-            prices: {
-              select: { id: true, store: true, size: true, price: true },
-              orderBy: { createdAt: 'desc' },
-              distinct: ['store', 'size']
-            }
-          },
+          // include: {
+          //   prices: {
+          //     select: { id: true, store: true, size: true, price: true },
+          //     orderBy: { createdAt: 'desc' },
+          //     distinct: ['store', 'size']
+          //   }
+          // },
         });
 
         reply.status(200);
