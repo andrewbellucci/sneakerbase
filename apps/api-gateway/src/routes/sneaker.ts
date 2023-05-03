@@ -162,4 +162,31 @@ export default async function (fastify: FastifyInstance) {
       }
     }
   );
+
+  fastify.withTypeProvider<ZodTypeProvider>().get('/search',
+    {
+      schema: {
+        params: z.object({ query: z.string() })
+      }
+    },
+    async (request, reply) => {
+      try {
+        const products = await prisma.product.findMany({
+          where: {
+            OR: [
+              { title: { search: request.params.query } },
+              { make: { search: request.params.query } },
+              { slug: { search: request.params.query } },
+            ]
+          },
+          select: { id: true, title: true, make: true, slug: true, previewImageUrl: true, isPlaceholder: true },
+          take: 10,
+        });
+
+        reply.status(200).send(products);
+      } catch(err) {
+        reply.status(500);
+      }
+    }
+  );
 }
