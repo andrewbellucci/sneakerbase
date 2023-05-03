@@ -166,7 +166,7 @@ export default async function (fastify: FastifyInstance) {
   fastify.withTypeProvider<ZodTypeProvider>().get('/search',
     {
       schema: {
-        params: z.object({ query: z.string() })
+        querystring: z.object({ query: z.string() })
       }
     },
     async (request, reply) => {
@@ -174,9 +174,9 @@ export default async function (fastify: FastifyInstance) {
         const products = await prisma.product.findMany({
           where: {
             OR: [
-              { title: { search: request.params.query } },
-              { make: { search: request.params.query } },
-              { slug: { search: request.params.query } },
+              { title: { search: request.query.query } },
+              { make: { search: request.query.query } },
+              { slug: { search: request.query.query } },
             ]
           },
           select: { id: true, title: true, make: true, slug: true, previewImageUrl: true, isPlaceholder: true },
