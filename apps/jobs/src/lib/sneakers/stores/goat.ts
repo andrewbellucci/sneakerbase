@@ -66,7 +66,12 @@ export async function processPricing(productId: string): Promise<void> {
 }
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {
-  const { templateId, url } = await getProductData(sku);
+  let strippedSku = sku;
+  if (strippedSku.includes('/')) {
+    strippedSku = (strippedSku.split('/')[0] || '').trim();
+  }
+
+  const { templateId, url } = await getProductData(strippedSku);
   const pricing = await getProductPricing(templateId);
 
   return {
@@ -90,7 +95,7 @@ async function getProductData(sku: string): Promise<{ templateId: string; url: s
         },
         ...generateProxy('http'),
       }).catch(retry)
-  });
+  }, { retries: 20 });
 
 
   const responseBody = response.data
@@ -121,7 +126,7 @@ async function getProductPricing(templateId: string): Promise<Record<string, num
       return cloudscraper.get(apiLink, {
         proxy: generateProxyString('http'),
       }).catch(retry);
-    });
+    }, { retries: 20 });
 
   const pricingBody = JSON.parse(response);
   const pricing: Record<string, number> = {};

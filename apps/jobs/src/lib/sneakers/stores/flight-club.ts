@@ -66,7 +66,12 @@ export async function processPricing(productId: string): Promise<void> {
 }
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {
-  const link = await getProductLink(sku);
+  let strippedSku = sku;
+  if (strippedSku.includes('/')) {
+    strippedSku = (strippedSku.split('/')[0] || '').trim();
+  }
+
+  const link = await getProductLink(strippedSku);
   const pricing = await getProductPricing(link);
 
   return {
@@ -91,7 +96,7 @@ async function getProductLink(sku: string): Promise<string> {
         // httpAgent // agent: generateAgent() as unknown,
       },
     ).catch(retry)
-  });
+  }, { retries: 20 });
 
   const responseBody = response.data;
 
@@ -116,7 +121,8 @@ async function getProductPricing(link: string): Promise<Record<string, number>> 
           },
         },
       ).catch(retry);
-    }
+    },
+    { retries: 20 }
   );
 
   const responseBody = JSON.parse((pricingResponse.body as string));

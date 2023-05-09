@@ -9,6 +9,21 @@ generator js {
   previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
+enum VoteType {
+  UP
+  DOWN
+}
+
+model Vote {
+  id                    String                          @id @unique @default(uuid())
+  product               Product                         @relation(fields: [productId], references: [id])
+  productId             String
+  user                  User                            @relation(fields: [userId], references: [id])
+  userId                String
+  createdAt             DateTime                        @default(now())
+  type                  VoteType
+}
+
 enum ImageStatus {
   PENDING
   PROCESSED
@@ -43,6 +58,8 @@ model Product {
   createdAt               DateTime?                       @default(now())
   sneakersOfTheDay        SneakerOfTheDay[]
   visits                  Visit[]
+  upVotes                 Vote[]
+  downVotes               Vote[]
 
   @@fulltext([title])
   @@fulltext([make])
@@ -77,6 +94,8 @@ model Price {
 
   @@index(fields: [productId, store, size], name: "productId_store_size")
   @@index(fields: [store, size, createdAt], name: "store_size_createdAt")
+  @@index(fields: [productId, change], name: "change")
+
 }
 
 model SneakerOfTheDay {

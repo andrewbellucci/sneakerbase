@@ -114,7 +114,8 @@ async function getProductPricing(link: string): Promise<Record<string, number>> 
     (retry: any) => cloudscraper.get(
       'https://stockx.com/api/products/' + link.split('.com/')[1] + '?includes=market&excludes=media',
       { proxy: generateProxyString('http') }
-    ).catch(retry)
+    ).catch(retry),
+    { retries: 20 }
   );
 
   const parsedBody = JSON.parse(response);

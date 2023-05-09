@@ -19,23 +19,15 @@ export default async function (fastify: FastifyInstance) {
             productId: true
           },
           orderBy: { _count: { productId: 'desc' } },
-          take: 1000
+          take: 5
         });
 
         const products = await prisma.product.findMany({
-          // TODO: limit the amount of
           where: {
             id: {
               in: productVisitCounts.map(p => p.productId)
             }
           },
-          // include: {
-          //   prices: {
-          //     select: { id: true, store: true, size: true, price: true },
-          //     orderBy: { createdAt: 'desc' },
-          //     distinct: ['store', 'size']
-          //   }
-          // },
         });
 
         reply.status(200);
@@ -115,6 +107,7 @@ export default async function (fastify: FastifyInstance) {
       }
 
       try {
+        // get the average price change for each product's prices by grouping by product id and averaging the change column
         const pricesWithBiggestChange = await prisma.price.groupBy({
           by: ['productId'],
           _avg: { change: true },
@@ -125,12 +118,18 @@ export default async function (fastify: FastifyInstance) {
         const products = await prisma.product.findMany({
           where: {
             id: { in: pricesWithBiggestChange.map(p => p.productId) }
+          },
+          include: {
+            prices: true
           }
         });
 
         reply.status(200);
 
-        return products;
+        return products.map(p => ({
+          ...p,
+          change: pricesWithBiggestChange.find(p2 => p2.productId === p.id)?._avg.change
+        }));
       } catch {
         reply.status(500);
       }
@@ -161,7 +160,10 @@ export default async function (fastify: FastifyInstance) {
 
         reply.status(200);
 
-        return products;
+        return products.map(p => ({
+          ...p,
+          change: pricesWithBiggestChange.find(p2 => p2.productId === p.id)?._avg.change
+        }));
       } catch {
         reply.status(500);
       }

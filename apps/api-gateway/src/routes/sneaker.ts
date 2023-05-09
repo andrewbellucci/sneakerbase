@@ -3,6 +3,7 @@ import { prisma } from "../utils/prisma";
 import z from 'zod';
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { logger } from "@sneakerbase/utils";
+import { Product } from '@sneakerbase/database';
 
 export default async function (fastify: FastifyInstance) {
   fastify.withTypeProvider<ZodTypeProvider>().get('/url-lookup',
@@ -163,28 +164,41 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/search',
-    {
-      schema: {
-        querystring: z.object({ query: z.string() })
-      }
-    },
+  fastify.withTypeProvider<ZodTypeProvider>().get('/dump',
     async (request, reply) => {
       try {
-        const products = await prisma.product.findMany({
-          where: {
-            OR: [
-              { title: { search: request.query.query } },
-              { make: { search: request.query.query } },
-              { slug: { search: request.query.query } },
-            ]
-          },
-          select: { id: true, title: true, make: true, slug: true, previewImageUrl: true, isPlaceholder: true },
-          take: 10,
-        });
+        // collect products in paginated fashion
+        const productCount = await prisma.product.count();
+
+        const products: {
+          id: string;
+          title: string;
+          slug: string;
+          colorWay: string;
+          make: string;
+          previewImageUrl: string;
+        }[] = [];
+
+        for (let i = 0; i < productCount; i += 10000) {
+          const productsChunk = await prisma.product.findMany({
+            skip: i,
+            take: 10000,
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              colorWay: true,
+              make: true,
+              previewImageUrl: true,
+            }
+          });
+
+          products.push(...productsChunk);
+        }
 
         reply.status(200).send(products);
       } catch(err) {
+        logger.error(err);
         reply.status(500);
       }
     }
