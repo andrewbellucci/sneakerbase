@@ -9,19 +9,20 @@ generator js {
   previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
-enum VoteType {
-  UP
-  DOWN
-}
-
-model Vote {
+model UpVote {
   id                    String                          @id @unique @default(uuid())
   product               Product                         @relation(fields: [productId], references: [id])
   productId             String
-  user                  User                            @relation(fields: [userId], references: [id])
   userId                String
   createdAt             DateTime                        @default(now())
-  type                  VoteType
+}
+
+model DownVote {
+  id                    String                          @id @unique @default(uuid())
+  product               Product                         @relation(fields: [productId], references: [id])
+  productId             String
+  userId                String
+  createdAt             DateTime                        @default(now())
 }
 
 enum ImageStatus {
@@ -58,8 +59,8 @@ model Product {
   createdAt               DateTime?                       @default(now())
   sneakersOfTheDay        SneakerOfTheDay[]
   visits                  Visit[]
-  upVotes                 Vote[]
-  downVotes               Vote[]
+  upVotes                 UpVote[]
+  downVotes               DownVote[]
 
   @@fulltext([title])
   @@fulltext([make])
