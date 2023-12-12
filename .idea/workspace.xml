@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="test">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/jobs/src/tasks/non-processed-images.ts" afterDir="false" />
+    <list default="true" id="c123c892-1dc1-424d-83f3-c88c4c110063" name="Changes" comment="blueprint update">
       <change beforePath="$PROJECT_DIR$/render.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/render.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -206,7 +204,7 @@
       <workItem from="1683655471572" duration="2278000" />
       <workItem from="1702331060555" duration="3951000" />
       <workItem from="1702342575623" duration="599000" />
-      <workItem from="1702348901834" duration="2133000" />
+      <workItem from="1702348901834" duration="2496000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1679459407806</created>
@@ -215,7 +213,23 @@
       <option name="project" value="LOCAL" />
       <updated>1679459407806</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="blueprint update">
+      <option name="closed" value="true" />
+      <created>1702351239165</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702351239165</updated>
+    </task>
+    <task id="LOCAL-00003" summary="blueprint update">
+      <option name="closed" value="true" />
+      <created>1702351293188</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702351293188</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +237,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="blueprint update" />
+    <option name="LAST_COMMIT_MESSAGE" value="blueprint update" />
   </component>
 </project>
