@@ -73,7 +73,7 @@ services:
         sync: false
 
 envVarGroups:
-  - name: sneakerbase-core-env
+  - name: Core
     envVars:
       - key: DATABASE_URL
         sync: false
