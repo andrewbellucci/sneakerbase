@@ -14,7 +14,7 @@ let booksSchema = {
 }
 
 export default async function() {
-  schedule.scheduleJob(EVERY_DAY_AT_MIDNIGHT, async function () {
+  // schedule.scheduleJob(EVERY_DAY_AT_MIDNIGHT, async function () {
     const start = Date.now();
     logger.info("Starting Sneaker Discovery");
 
@@ -29,5 +29,5 @@ export default async function() {
     } catch (error) {
       logger.error(error);
     }
-  });
+  // });
 }

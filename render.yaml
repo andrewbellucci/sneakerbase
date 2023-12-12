@@ -17,6 +17,10 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - key: WEB_TOKEN
+        sync: false
       - key: PORT
         value: 3000
 
