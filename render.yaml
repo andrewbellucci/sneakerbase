@@ -19,6 +19,7 @@ services:
         sync: false
       - key: PORT
         value: 3000
+      - fromGroup: my-env-group
 
   - type: cron
     name: non-processed-images
@@ -32,6 +33,7 @@ services:
     envVars:
       - key: SENTRY_DSN
         sync: false
+      - fromGroup: my-env-group
 
   - type: cron
     name: process-prices
@@ -45,6 +47,7 @@ services:
     envVars:
       - key: SENTRY_DSN
         sync: false
+      - fromGroup: my-env-group
 
   - type: cron
     name: sneaker-discovery
@@ -58,6 +61,7 @@ services:
     envVars:
       - key: SENTRY_DSN
         sync: false
+      - fromGroup: my-env-group
 
   - type: cron
     name: sneaker-of-the-day
@@ -71,6 +75,8 @@ services:
     envVars:
       - key: SENTRY_DSN
         sync: false
+      - fromGroup: my-env-group
+
 
 envVarGroups:
   - name: sneakerbase-core-env
