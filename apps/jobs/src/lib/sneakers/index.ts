@@ -1,5 +1,5 @@
 import { defaultStockXAlgoliaOptions, searchStockX, SneakerResponse } from "../../utils/stockx-algolia";
-import { promiseAllInBatches } from "@sneakerbase/utils";
+import { promiseAllInBatches, promiseAllSettledInBatches } from "@sneakerbase/utils";
 import { prisma } from "../../utils/prisma";
 import { isPlaceholderImage } from "../../utils/is-placeholder-image";
 import { processSneakerImage } from "../images";
@@ -145,7 +145,7 @@ async function processSneaker(sneaker: SneakerResponse) {
 }
 
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
-  await promiseAllInBatches(
+  await promiseAllSettledInBatches(
     sneaker => processSneaker(sneaker),
     sneakers,
     15
