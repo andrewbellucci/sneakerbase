@@ -1,14 +1,13 @@
-FROM node:22.0.0-slim as base
+FROM node:21 as base
 
 WORKDIR /app
 
-RUN npm install -g pnpm
-
 COPY . .
 
+RUN npm install -g pnpm@8.10.2
 RUN pnpm install
 
-FROM node:22.0.0-slim as production
+FROM node:21-slim as production
 
 WORKDIR /app
 
@@ -16,5 +15,4 @@ COPY --from=base /app ./app/apps/jobs
 
 RUN pnpm run build
 
-# insert variable here for job type ???
 CMD ["node", "./dist/jobs.js"]

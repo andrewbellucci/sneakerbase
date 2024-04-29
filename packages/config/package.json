@@ -4,6 +4,6 @@
   "private": true,
   "files": ["base.tsconfig.json", "api.tsconfig.json", "pkg.tsconfig.json"],
   "dependencies": {
-    "@tsconfig/node20": "^20.1.4"
+    "@tsconfig/node21": "^21.0.3"
   }
 }
