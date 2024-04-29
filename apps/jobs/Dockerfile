@@ -6,13 +6,12 @@ COPY . .
 
 RUN npm install -g pnpm@8.10.2
 RUN pnpm install
+RUN cd apps/jobs && pnpm build
 
 FROM node:21-slim as production
 
 WORKDIR /app
 
-COPY --from=base /app ./app/apps/jobs
-
-RUN npm run build
+COPY --from=base /app/apps/jobs .
 
 CMD ["node", "./dist/jobs.js"]

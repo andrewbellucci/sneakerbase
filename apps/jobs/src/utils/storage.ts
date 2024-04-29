@@ -27,14 +27,14 @@ export function uploadS3(
 ) {
   const params = contentType
     ? {
-        ACL: "public-read",
+        // ACL: "public-read",
         Bucket: bucket,
         Key: String(name),
         Body: file,
         ContentType: contentType,
       }
     : {
-        ACL: "public-read",
+        // ACL: "public-read",
         Bucket: bucket,
         Key: String(name),
         Body: file,
