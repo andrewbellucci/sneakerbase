@@ -2,12 +2,8 @@
   "name": "@sneakerbase/config",
   "version": "0.0.0",
   "private": true,
-  "files": [
-    "base.tsconfig.json",
-    "api.tsconfig.json",
-    "pkg.tsconfig.json"
-  ],
+  "files": ["base.tsconfig.json", "api.tsconfig.json", "pkg.tsconfig.json"],
   "dependencies": {
-    "@tsconfig/node16": "^1.0.3"
+    "@tsconfig/node20": "^20.1.4"
   }
 }
