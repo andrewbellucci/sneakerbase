@@ -13,6 +13,6 @@ WORKDIR /app
 
 COPY --from=base /app ./app/apps/jobs
 
-RUN pnpm run build
+RUN npm run build
 
 CMD ["node", "./dist/jobs.js"]
