@@ -14,4 +14,4 @@ WORKDIR /app
 
 COPY --from=base /app/apps/jobs .
 
-CMD ["node", "dist/jobs.js"]
+CMD ["node", "dist/job.js"]
