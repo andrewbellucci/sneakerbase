@@ -152,10 +152,7 @@ async function processSneaker(sneaker: SneakerResponse) {
 }
 
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
-  for (const sneaker of sneakers) {
-    console.log(`Processing: ${sneaker.name}`);
-    await processSneaker(sneaker);
-  }
+  await promiseAllSettledInBatches(processSneaker, sneakers, 15);
 }
 
 export async function pickSneakerOfTheDay() {
