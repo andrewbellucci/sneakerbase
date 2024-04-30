@@ -6,6 +6,7 @@ export const EVERY_DAY_AT_3PM = "0 15 * * *" as const;
 export const EVERY_DAY_AT_4_15PM = "15 16 * * *" as const;
 export const EVERY_DAY_AT_4_45PM = "45 16 * * *" as const;
 export const EVERY_DAY_AT_9_30PM = "30 21 * * *" as const;
+export const EVERY_DAY_AT_11_30PM = "30 23 * * *" as const;
 export const EVERY_DAY_AT_MIDNIGHT = "0 0 * * *" as const;
 export const EVERY_DAY_AT_1_40AM = "40 1 * * *" as const;
 export const EVERY_SUNDAY_AT_MIDNIGHT = "0 0 * * 0" as const;
