@@ -1,8 +1,8 @@
 import sneakerDiscovery from "./tasks/sneaker-discovery";
 
-console.log("Starting jobs");
+console.log("Scheduling jobs");
 
 // Start the sneaker discovery task
 void sneakerDiscovery();
 
-console.log("Jobs started");
+console.log("Jobs scheduled");
