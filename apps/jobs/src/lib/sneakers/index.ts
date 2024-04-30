@@ -1,5 +1,12 @@
-import { defaultStockXAlgoliaOptions, searchStockX, SneakerResponse } from "../../utils/stockx-algolia";
-import { promiseAllInBatches, promiseAllSettledInBatches } from "@sneakerbase/utils";
+import {
+  defaultStockXAlgoliaOptions,
+  searchStockX,
+  SneakerResponse,
+} from "../../utils/stockx-algolia";
+import {
+  promiseAllInBatches,
+  promiseAllSettledInBatches,
+} from "@sneakerbase/utils";
 import { prisma } from "../../utils/prisma";
 import { isPlaceholderImage } from "../../utils/is-placeholder-image";
 import { processSneakerImage } from "../images";
@@ -7,7 +14,7 @@ import { handlePriceProcessing } from "../prices";
 import slugify from "slugify";
 import { Sentry } from "../../utils/sentry";
 
-async function getSneakerTraits(term = ''): Promise<string[]> {
+async function getSneakerTraits(term = ""): Promise<string[]> {
   const response = await searchStockX(term);
   const traits = new Set<string>();
 
@@ -22,7 +29,7 @@ async function getSneakerTraits(term = ''): Promise<string[]> {
 
 export async function collectTraits(): Promise<string[]> {
   const searchedTerms = new Set<string>();
-  let searchTerms = new Set<string>(await getSneakerTraits(''));
+  let searchTerms = new Set<string>(await getSneakerTraits(""));
 
   let level = 0;
   const buildSearchTerms = async (terms: Set<string>) => {
@@ -45,12 +52,12 @@ export async function collectTraits(): Promise<string[]> {
     );
 
     if (traits.size > 0 && level < 10) {
-      console.log('Building new search terms');
+      console.log("Building new search terms");
       searchTerms = new Set([...searchTerms, ...traits]);
       level++;
       await buildSearchTerms(traits);
     } else {
-      console.log('No new search terms, stopping');
+      console.log("No new search terms, stopping");
     }
   };
 
@@ -59,7 +66,9 @@ export async function collectTraits(): Promise<string[]> {
   return Array.from(searchTerms);
 }
 
-export async function collectSneakersFromTraits(traits: string[]): Promise<SneakerResponse[]> {
+export async function collectSneakersFromTraits(
+  traits: string[],
+): Promise<SneakerResponse[]> {
   // For each search term, get the sneakers on every page
   const sneakerSkus = new Set<string>();
   const sneakers: SneakerResponse[] = [];
@@ -70,18 +79,15 @@ export async function collectSneakersFromTraits(traits: string[]): Promise<Sneak
 
     await Promise.all(
       pages.map(async (_, page) => {
-        const { hits } = await searchStockX(
-          term,
-          {
-            ...defaultStockXAlgoliaOptions,
-            page: page + 1,
-          },
-        );
+        const { hits } = await searchStockX(term, {
+          ...defaultStockXAlgoliaOptions,
+          page: page + 1,
+        });
 
         hits.forEach((hit) => {
           if (
             hit.style_id &&
-            hit.style_id.trim() !== '' &&
+            hit.style_id.trim() !== "" &&
             !sneakerSkus.has(hit.style_id)
           ) {
             sneakerSkus.add(hit.style_id);
@@ -100,8 +106,8 @@ async function processSneaker(sneaker: SneakerResponse) {
   const sku = sneaker.style_id;
 
   const existingSneaker = await prisma.product.findFirst({
-    where: { sku }
-  })
+    where: { sku },
+  });
 
   if (existingSneaker) return;
 
@@ -112,7 +118,7 @@ async function processSneaker(sneaker: SneakerResponse) {
   let slug = slugify(sneaker.name);
   do {
     slugExists = !!(await prisma.product.findFirst({
-      where: { slug }
+      where: { slug },
     }));
 
     if (slugExists) {
@@ -131,13 +137,14 @@ async function processSneaker(sneaker: SneakerResponse) {
       retailPrice: sneaker.price,
       sku: sneaker.style_id,
       isPlaceholder: isPlaceholderImage(imageUrl),
-      releaseDate: sneaker.release_date && sneaker.release_date.trim() !== ''
-        ? new Date(sneaker.release_date)
-        : null,
+      releaseDate:
+        sneaker.release_date && sneaker.release_date.trim() !== ""
+          ? new Date(sneaker.release_date)
+          : null,
       previewImageUrl: isPlaceholderImage(imageUrl)
-        ? 'https://cdn.sneakerbase.io/products/placeholder.png'
+        ? "https://cdn.sneakerbase.io/products/placeholder.png"
         : imageUrl,
-    }
+    },
   });
 
   await handlePriceProcessing(newSneaker.id);
@@ -145,11 +152,10 @@ async function processSneaker(sneaker: SneakerResponse) {
 }
 
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
-  await promiseAllSettledInBatches(
-    sneaker => processSneaker(sneaker),
-    sneakers,
-    15
-  );
+  for (const sneaker of sneakers) {
+    console.log(`Processing: ${sneaker.name}`);
+    await processSneaker(sneaker);
+  }
 }
 
 export async function pickSneakerOfTheDay() {
@@ -157,7 +163,7 @@ export async function pickSneakerOfTheDay() {
     const sneakersAvailable = await prisma.product.count({
       where: {
         isPlaceholder: false,
-      }
+      },
     });
     const randomIndex = Math.floor(Math.random() * sneakersAvailable);
     const sneaker = await prisma.product.findFirst({
@@ -165,13 +171,13 @@ export async function pickSneakerOfTheDay() {
       skip: randomIndex,
       where: {
         isPlaceholder: false,
-      }
+      },
     });
 
     if (!sneaker) return;
 
     await prisma.sneakerOfTheDay.create({
-      data: { productId: sneaker.id }
+      data: { productId: sneaker.id },
     });
   } catch (error) {
     Sentry.captureException(error);
