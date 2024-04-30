@@ -147,7 +147,7 @@ async function processSneaker(sneaker: SneakerResponse) {
     },
   });
 
-  await handlePriceProcessing(newSneaker.id);
+  // await handlePriceProcessing(newSneaker.id);
   await processSneakerImage(newSneaker.id);
 }
 
