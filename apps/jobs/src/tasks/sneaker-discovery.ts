@@ -5,7 +5,7 @@ import {
   processSneakersFound,
 } from "../lib/sneakers";
 import schedule from "node-schedule";
-import { EVERY_DAY_AT_1_35AM, EVERY_DAY_AT_MIDNIGHT } from "../utils/cron";
+import { EVERY_DAY_AT_1_37AM, EVERY_DAY_AT_MIDNIGHT } from "../utils/cron";
 // import Typesense from "typesense";
 
 // let booksSchema = {
@@ -20,7 +20,7 @@ import { EVERY_DAY_AT_1_35AM, EVERY_DAY_AT_MIDNIGHT } from "../utils/cron";
 export default async function () {
   console.log("Scheduling sneaker discovery job");
 
-  schedule.scheduleJob(EVERY_DAY_AT_1_35AM, async function () {
+  schedule.scheduleJob(EVERY_DAY_AT_1_37AM, async function () {
     const start = Date.now();
     logger.info("Starting Sneaker Discovery");
 
