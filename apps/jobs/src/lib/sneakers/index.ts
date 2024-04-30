@@ -148,7 +148,11 @@ async function processSneaker(sneaker: SneakerResponse) {
   });
 
   // await handlePriceProcessing(newSneaker.id);
-  await processSneakerImage(newSneaker.id);
+  try {
+    await processSneakerImage(newSneaker.id);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function processSneakersFound(sneakers: SneakerResponse[]) {
