@@ -1,0 +1,15 @@
+GET http://localhost:3000/health
+Accept: application/json
+
+
+#GET http://localhost:3000/web-data/new-products
+#Accept: application/json
+#Authorization: hello-there
+#
+####
+#
+GET https://api.sneakerbase.io/web-data/new-products
+Accept: application/json
+Authorization: clvrd1lpm000008mq3kj1d56s
+
+###

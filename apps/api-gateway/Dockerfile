@@ -8,7 +8,7 @@ RUN npm install -g pnpm@8.10.2
 RUN pnpm install
 RUN cd apps/api-gateway && pnpm build
 
-ENV ADDRESS=0.0.0.0 PORT=3000
+ENV HOST=0.0.0.0 PORT=3000
 
 EXPOSE 3000
 
