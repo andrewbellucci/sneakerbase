@@ -6,6 +6,34 @@ import { logger } from "@sneakerbase/utils";
 import { Product } from '@sneakerbase/database';
 
 export default async function (fastify: FastifyInstance) {
+  fastify.withTypeProvider<ZodTypeProvider>().get('/',
+    {
+      schema: {
+        querystring: z.object({
+          q: z.string(),
+        })
+      }
+    },
+    async (request, reply) => {
+      try {
+        const query = request.query.q;
+        const products = await prisma.product.findMany({
+          select: { slug: true, id: true },
+          where: {
+            sku: {
+              search: query
+            }
+          },
+          take: 25,
+        });
+
+        reply.status(200).send(products);
+      } catch {
+        reply.status(500);
+      }
+    }
+  );
+
   fastify.withTypeProvider<ZodTypeProvider>().get('/url-lookup',
     {
       schema: {
