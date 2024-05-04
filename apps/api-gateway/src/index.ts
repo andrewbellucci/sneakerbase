@@ -40,7 +40,8 @@ async function startServer() {
     server.register(require('./routes/web-data'), { prefix: '/web-data' });
 
     await server.listen({
-      port: 3000
+      host: env.HOST,
+      port: env.PORT
     });
   } catch (e) {
     console.error(e);
