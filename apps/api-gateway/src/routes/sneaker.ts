@@ -18,7 +18,7 @@ export default async function (fastify: FastifyInstance) {
       try {
         const query = request.query.q;
         const products = await prisma.product.findMany({
-          select: { slug: true, id: true },
+          select: { slug: true, id: true, title: true, previewImageUrl: true },
           where: {
             sku: {
               search: query
