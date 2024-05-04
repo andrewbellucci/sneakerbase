@@ -1,5 +1,6 @@
 // UTC Timezone is used for all cron expressions
 export const EVERY_DAY_AT_5AM = "0 05 * * *" as const;
+export const EVERY_DAY_AT_5_30AM = "30 05 * * *" as const;
 export const EVERY_DAY_AT_5PM = "0 17 * * *" as const;
 export const EVERY_DAY_AT_2_15PM = "15 14 * * *" as const;
 export const EVERY_DAY_AT_3PM = "0 15 * * *" as const;

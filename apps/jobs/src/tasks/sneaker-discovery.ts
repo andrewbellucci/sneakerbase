@@ -18,7 +18,7 @@ import { EVERY_DAY_AT_1_40AM, EVERY_DAY_AT_11_30PM } from "../utils/cron";
 // };
 
 export default async function () {
-  console.log("Scheduling sneaker discovery job");
+  logger.info("Scheduling sneaker discovery job");
 
   schedule.scheduleJob(EVERY_DAY_AT_11_30PM, async function () {
     const start = Date.now();

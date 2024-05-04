@@ -15,11 +15,10 @@ export async function processPricing(productId: string): Promise<void> {
   try {
     const product = await prisma.product.findUnique({
       where: { id: productId },
-      select: { id: true, sku: true, goatUrl: true },
+      select: { id: true, sku: true, goatUrl: true, title: true },
     });
 
     if (!product) return;
-
     const { prices, url } = await getPricesAndUrl(product.sku);
 
     if (product.goatUrl !== url) {
@@ -84,6 +83,7 @@ async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: str
 }
 
 async function getProductData(sku: string): Promise<{ templateId: string; url: string }> {
+  console.log('getting product data first')
   let response = await promiseRetry((retry: any) => {
     return axios.post(
       productDataEndpoint,

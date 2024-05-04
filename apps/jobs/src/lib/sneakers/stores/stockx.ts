@@ -1,13 +1,23 @@
-import { generateProxyString } from "../../../utils/generate-proxy";
+import {generateProxy, generateProxyString} from "../../../utils/generate-proxy";
 import { prisma } from "../../../utils/prisma";
 import { Store } from "@sneakerbase/database";
 import { searchStockX } from "../../../utils/stockx-algolia";
 import { Price } from "../types";
 import { Sentry } from "../../../utils/sentry";
+import * as cheerio from "cheerio";
+import axios from "axios";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloudscraper = require("cloudscraper");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const promiseRetry = require("promise-retry");
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Humanoid = require("humanoid-js");
+
+const humanoid = new Humanoid();
+
+import { fetch as fH2 } from 'fetch-http2'
+
 
 export interface StockxProductData {
   styleId: string;
@@ -29,6 +39,7 @@ export async function processPricing(productId: string): Promise<void> {
     });
 
     if (!product) return;
+
 
     const { prices, url } = await getPricesAndUrl(product.sku);
 
@@ -77,7 +88,10 @@ export async function processPricing(productId: string): Promise<void> {
 
 async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: string }> {
   const productData = await getProductData(sku);
+  console.log('product found, finding pricing')
+
   const pricing = await getProductPricing(productData.link);
+  console.log('pricing found')
 
   return {
     prices: Object.keys(pricing).map(size => ({
@@ -93,44 +107,62 @@ async function getProductData(sku: string): Promise<StockxProductData> {
 
   if (response.hits.length === 0) throw Error(`"${sku}" does not exist.`);
 
-const hit = response.hits[0];
+  const hit = response.hits[0];
 
-return {
-  styleId: hit.style_id,
-  name: hit.name,
-  image: hit.media.imageUrl,
-  brand: hit.brand,
-  colorway: hit.colorway,
-  make: hit.make,
-  retailPrice: Number(hit.searchable_traits['Retail Price']),
-  releaseDate: hit.release_date,
-  // Save this or metadata related to scraping in the database to save bandwidth
-  link: 'https://stockx.com/' + hit.url,
-};
+  return {
+    styleId: hit.style_id,
+    name: hit.name,
+    image: hit.media.imageUrl,
+    brand: hit.brand,
+    colorway: hit.colorway,
+    make: hit.make,
+    retailPrice: Number(hit.searchable_traits['Retail Price']),
+    releaseDate: hit.release_date,
+    // Save this or metadata related to scraping in the database to save bandwidth
+    link: 'https://stockx.com/' + hit.url,
+  };
 }
 
 async function getProductPricing(link: string): Promise<Record<string, number>> {
-  let response = await promiseRetry(
-    (retry: any) => cloudscraper.get(
-      'https://stockx.com/api/products/' + link.split('.com/')[1] + '?includes=market&excludes=media',
-      { proxy: generateProxyString('http') }
-    ).catch(retry),
-    { retries: 20 }
-  );
+  const res = await humanoid.get('https://stockx.com/' + link.split('.com/')[1], {
+    // ...generateProxy('https'),
+  });
 
-  const parsedBody = JSON.parse(response);
-  const children = parsedBody.Product.children;
+  const $ = cheerio.load(res.body);
+
+  const nextData = JSON.parse($('#__NEXT_DATA__').html() ?? "");
+
+  const productData: any = nextData.props.pageProps.req.appContext.states.query.value.queries.find(
+    (query: any) => query.queryKey.includes('GetProduct')
+  );
+  const variants: {
+    market: {
+      state: {
+        lowestAsk: {
+          amount: number
+        } | null;
+      };
+    };
+    sizeChart: {
+      displayOptions: {
+        size: string;
+        type: string;
+      }[]
+    }
+  }[] = productData.state.data.product.variants;
+
   const pricing: Record<string, number> = {};
 
-  Object.keys(children).forEach(function (key) {
-    if (children[key].market.lowestAsk == 0) return;
+  variants.forEach(function (variant) {
+    if (variant.market.state.lowestAsk === null) return;
+    if (variant.market.state.lowestAsk.amount === 0) return;
 
-    let size = children[key].shoeSize;
-    if (size[size.length - 1] === 'W' || size[size.length - 1] === 'Y') {
-      size = size.substring(0, size.length - 1);
-    }
+    const usSize = variant.sizeChart.displayOptions.find(option => option.type === "us m");
+    if (!usSize) return;
 
-    pricing[size] = children[key].market.lowestAsk;
+    let size = usSize.size.replace('US M ', '');
+
+    pricing[size] = variant.market.state.lowestAsk.amount;
   });
 
   return pricing;

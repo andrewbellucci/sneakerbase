@@ -25,6 +25,6 @@ export async function processAllSneakerPrices() {
   await promiseAllSettledInBatches(
     (sneaker) => handlePriceProcessing(sneaker.id),
     sneakers,
-    250
+    10
   );
 }
