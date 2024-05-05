@@ -25,6 +25,21 @@ export async function processAllSneakerPrices() {
   await promiseAllSettledInBatches(
     (sneaker) => handlePriceProcessing(sneaker.id),
     sneakers,
-    10
+    150
+  );
+}
+
+export async function processAllNonPricedSneakerPrices() {
+  const sneakers = await prisma.product.findMany({
+    select: { id: true },
+    where: {
+      prices: { none: {} },
+    }
+  });
+
+  await promiseAllSettledInBatches(
+    (sneaker) => handlePriceProcessing(sneaker.id),
+    sneakers,
+    150
   );
 }
