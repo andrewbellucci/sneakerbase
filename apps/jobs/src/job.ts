@@ -1,8 +1,8 @@
 import { createClient } from 'redis';
 import sneakerDiscovery from "./tasks/sneaker-discovery";
 import processPrices from "./tasks/process-prices";
-import {handlePriceProcessing} from "src/lib/prices";
-import {env} from "src/utils/env";
+import {handlePriceProcessing} from "./lib/prices";
+import {env} from "./utils/env";
 
 
 
