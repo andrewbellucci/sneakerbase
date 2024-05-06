@@ -14,6 +14,7 @@ const EnvSchema = z.object({
   PROXY_USERNAME: z.string(),
   PROXY_PASSWORD: z.string(),
   SENTRY_DSN: z.string(),
+  REDIS_URL: z.string(),
 });
 
 // TODO: update this to use cloudflare R2
@@ -29,6 +30,7 @@ const variables = {
   PROXY_USERNAME: process.env.PROXY_USERNAME,
   PROXY_PASSWORD: process.env.PROXY_PASSWORD,
   SENTRY_DSN: process.env.SENTRY_DSN,
+  REDIS_URL: process.env.REDIS_URL,
 };
 
 export const env = EnvSchema.parse(variables);

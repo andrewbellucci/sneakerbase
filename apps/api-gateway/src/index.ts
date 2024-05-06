@@ -4,6 +4,13 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUI from '@fastify/swagger-ui';
 import pino from "pino";
 import {env} from "./utils/env";
+import type { FastifyRedis } from "@fastify/redis";
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    redis: FastifyRedis;
+  }
+}
 
 async function startServer() {
   try {
@@ -19,6 +26,7 @@ async function startServer() {
     server.register(require('@fastify/cors'), { origin: '*' });
     server.register(require('@fastify/helmet'));
     server.register(require('@immobiliarelabs/fastify-sentry'), { dsn: env.SENTRY_DSN });
+    server.register(require('@fastify/redis'), { url: env.REDIS_URL });
 
     // Swagger Docs
     server.register(fastifySwagger, {

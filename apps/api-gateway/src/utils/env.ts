@@ -9,6 +9,7 @@ const EnvSchema = z.object({
   PORT: z.coerce.number(),
   WEB_TOKEN: z.string(),
   SENTRY_DSN: z.string(),
+  REDIS_URL: z.string(),
 });
 
 export type EnvType = z.infer<typeof EnvSchema>;
@@ -19,6 +20,7 @@ const variables = {
   PORT: process.env.PORT,
   WEB_TOKEN: process.env.WEB_TOKEN,
   SENTRY_DSN: process.env.SENTRY_DSN,
+  REDIS_URL: process.env.REDIS_URL
 };
 
 export const env = EnvSchema.parse(variables);
