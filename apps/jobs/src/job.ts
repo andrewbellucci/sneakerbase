@@ -1,10 +1,8 @@
-import { createClient } from 'redis';
+import { createClient } from "redis";
 import sneakerDiscovery from "./tasks/sneaker-discovery";
 import processPrices from "./tasks/process-prices";
-import {handlePriceProcessing} from "./lib/prices";
-import {env} from "./utils/env";
-
-
+import { handlePriceProcessing } from "./lib/prices";
+import { env } from "./utils/env";
 
 console.log("Scheduling jobs");
 
@@ -12,23 +10,21 @@ console.log("Scheduling jobs");
 void sneakerDiscovery();
 
 // Start the sneaker price processing task
-void processPrices();
+// void processPrices();
 
 console.log("Jobs scheduled");
 
 (async function startTaskListeners() {
-  console.log('Scheduling task listeners');
+  console.log("Scheduling task listeners");
 
   const client = await createClient({
-    url: env.REDIS_URL
+    url: env.REDIS_URL,
   })
-    .on('error', err => console.log('Redis Client Error', err))
+    .on("error", (err) => console.log("Redis Client Error", err))
     .connect();
 
   // Handle price processing for updates, and non priced sneakers.
-  await client.subscribe('update-pricing', handlePriceProcessing);
+  await client.subscribe("update-pricing", handlePriceProcessing);
 
-  console.log('Scheduled task listeners');
+  console.log("Scheduled task listeners");
 })();
-
-

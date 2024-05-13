@@ -1,12 +1,16 @@
 import fastify from "fastify";
-import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import fastifySwagger from '@fastify/swagger';
-import fastifySwaggerUI from '@fastify/swagger-ui';
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+} from "fastify-type-provider-zod";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUI from "@fastify/swagger-ui";
 import pino from "pino";
-import {env} from "./utils/env";
+import { env } from "./utils/env";
 import type { FastifyRedis } from "@fastify/redis";
 
-declare module 'fastify' {
+declare module "fastify" {
   interface FastifyInstance {
     redis: FastifyRedis;
   }
@@ -15,7 +19,7 @@ declare module 'fastify' {
 async function startServer() {
   try {
     const server = fastify({
-      logger: pino({ level: 'info' }),
+      logger: pino({ level: "info" }),
     });
 
     // Type Provider
@@ -23,43 +27,44 @@ async function startServer() {
     server.setSerializerCompiler(serializerCompiler);
 
     // Plugins
-    server.register(require('@fastify/cors'), { origin: '*' });
-    server.register(require('@fastify/helmet'));
-    server.register(require('@immobiliarelabs/fastify-sentry'), { dsn: env.SENTRY_DSN });
-    server.register(require('@fastify/redis'), { url: env.REDIS_URL });
+    server.register(require("@fastify/cors"), { origin: "*" });
+    server.register(require("@fastify/helmet"));
+    server.register(require("@immobiliarelabs/fastify-sentry"), {
+      dsn: env.SENTRY_DSN,
+    });
+    server.register(require("@fastify/redis"), { url: env.REDIS_URL });
 
     // Swagger Docs
     server.register(fastifySwagger, {
       openapi: {
         info: {
-          title: 'Sneakerbase API',
-          description: 'The gateway to the Sneakerbase API',
-          version: '1.0.0',
+          title: "Sneakerbase API",
+          description: "The gateway to the Sneakerbase API",
+          version: "1.0.0",
         },
         servers: [],
       },
       transform: jsonSchemaTransform,
     });
-    server.register(fastifySwaggerUI, { routePrefix: '/docs' });
+    server.register(fastifySwaggerUI, { routePrefix: "/docs" });
 
     // Routes
-    server.register(require('./routes/health'), { prefix: '/health' });
-    server.register(require('./routes/sneaker'), { prefix: '/sneaker' });
-    server.register(require('./routes/web-data'), { prefix: '/web-data' });
+    server.register(require("./routes/health"), { prefix: "/health" });
+    server.register(require("./routes/sneaker"), { prefix: "/sneaker" });
+    server.register(require("./routes/web-data"), { prefix: "/web-data" });
 
     await server.listen({
       host: env.HOST,
-      port: env.PORT
+      port: env.PORT,
     });
   } catch (e) {
     console.error(e);
   }
 }
 
-process.on('unhandledRejection', (e) => {
+process.on("unhandledRejection", (e) => {
   console.error(e);
   process.exit(1);
 });
 
 startServer().catch(console.error);
-

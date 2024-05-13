@@ -1,19 +1,20 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../utils/prisma";
-import z from 'zod';
+import z from "zod";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { logger } from "@sneakerbase/utils";
-import { Product } from '@sneakerbase/database';
-import {differenceInDays} from "date-fns";
+import { Product } from "@sneakerbase/database";
+import { differenceInDays } from "date-fns";
 
 export default async function (fastify: FastifyInstance) {
-  fastify.withTypeProvider<ZodTypeProvider>().get('/',
+  fastify.withTypeProvider<ZodTypeProvider>().get(
+    "/",
     {
       schema: {
         querystring: z.object({
           q: z.string(),
-        })
-      }
+        }),
+      },
     },
     async (request, reply) => {
       try {
@@ -22,8 +23,8 @@ export default async function (fastify: FastifyInstance) {
           select: { slug: true, id: true, title: true, previewImageUrl: true },
           where: {
             sku: {
-              search: query
-            }
+              search: query,
+            },
           },
           take: 25,
         });
@@ -35,13 +36,14 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/url-lookup',
+  fastify.withTypeProvider<ZodTypeProvider>().get(
+    "/url-lookup",
     {
       schema: {
         querystring: z.object({
           url: z.string().url(),
-        })
-      }
+        }),
+      },
     },
     async (request, reply) => {
       try {
@@ -49,11 +51,7 @@ export default async function (fastify: FastifyInstance) {
         const product = await prisma.product.findFirst({
           select: { slug: true, id: true },
           where: {
-            OR: [
-              { stockXUrl: url },
-              { goatUrl: url },
-              { flightClubUrl: url },
-            ]
+            OR: [{ stockXUrl: url }, { goatUrl: url }, { flightClubUrl: url }],
           },
         });
 
@@ -72,13 +70,14 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/:id',
+  fastify.withTypeProvider<ZodTypeProvider>().get(
+    "/:id",
     {
       schema: {
         params: z.object({
           id: z.string(),
-        })
-      }
+        }),
+      },
     },
     async (request, reply) => {
       try {
@@ -86,11 +85,17 @@ export default async function (fastify: FastifyInstance) {
           where: { id: request.params.id },
           include: {
             prices: {
-              select: { id: true, store: true, size: true, price: true, createdAt: true },
-              orderBy: { createdAt: 'desc' },
-              distinct: ['store', 'size']
-            }
-          }
+              select: {
+                id: true,
+                store: true,
+                size: true,
+                price: true,
+                createdAt: true,
+              },
+              orderBy: { createdAt: "desc" },
+              distinct: ["store", "size"],
+            },
+          },
         });
 
         if (!product) {
@@ -104,24 +109,27 @@ export default async function (fastify: FastifyInstance) {
         await prisma.visit.create({ data: { productId: request.params.id } });
 
         // Check to see if the product is an old scrape or has no prices
-        const pricesNeedUpdates = product.prices.find(price => differenceInDays(price.createdAt, new Date()) >= 1);
+        const pricesNeedUpdates = product.prices.find(
+          (price) => differenceInDays(price.createdAt, new Date()) >= 1
+        );
         if (product.prices.length === 0 || pricesNeedUpdates) {
-          await fastify.redis.publish('update-pricing', product.id);
+          await fastify.redis.publish("update-pricing", product.id);
         }
-      } catch(e) {
+      } catch (e) {
         logger.error(e);
         reply.status(500);
       }
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/slug/:slug',
+  fastify.withTypeProvider<ZodTypeProvider>().get(
+    "/slug/:slug",
     {
       schema: {
         params: z.object({
           slug: z.string(),
-        })
-      }
+        }),
+      },
     },
     async (request, reply) => {
       try {
@@ -129,11 +137,17 @@ export default async function (fastify: FastifyInstance) {
           where: { slug: request.params.slug },
           include: {
             prices: {
-              select: { id: true, store: true, size: true, price: true, createdAt: true },
-              orderBy: { createdAt: 'desc' },
-              distinct: ['store', 'size']
-            }
-          }
+              select: {
+                id: true,
+                store: true,
+                size: true,
+                price: true,
+                createdAt: true,
+              },
+              orderBy: { createdAt: "desc" },
+              distinct: ["store", "size"],
+            },
+          },
         });
 
         if (!product) {
@@ -147,9 +161,11 @@ export default async function (fastify: FastifyInstance) {
         await prisma.visit.create({ data: { productId: product.id } });
 
         // Check to see if the product is an old scrape or has no prices
-        const pricesNeedUpdates = product.prices.find(price => differenceInDays(price.createdAt, new Date()) >= 1);
+        const pricesNeedUpdates = product.prices.find(
+          (price) => differenceInDays(price.createdAt, new Date()) >= 1
+        );
         if (product.prices.length === 0 || pricesNeedUpdates) {
-          await fastify.redis.publish('update-pricing', product.id);
+          await fastify.redis.publish("update-pricing", product.id);
         }
       } catch {
         reply.status(500);
@@ -157,13 +173,14 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().post('/slug/:slug/visit',
+  fastify.withTypeProvider<ZodTypeProvider>().post(
+    "/slug/:slug/visit",
     {
       schema: {
         params: z.object({
           slug: z.string(),
-        })
-      }
+        }),
+      },
     },
     async (request, reply) => {
       try {
@@ -180,33 +197,36 @@ export default async function (fastify: FastifyInstance) {
         // Register visit
         await prisma.visit.create({ data: { productId: product.id } });
 
-        reply.status(200)
+        reply.status(200);
       } catch {
         reply.status(500);
       }
     }
   );
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/sneakers-without-prices',
-    async (request, reply) => {
+  fastify
+    .withTypeProvider<ZodTypeProvider>()
+    .get("/sneakers-without-prices", async (request, reply) => {
       try {
         // get products without prices
         const products = await prisma.product.findMany({
           where: {
-            prices: { none: {} },
-          }
+            prices: {
+              none: {},
+            },
+          },
         });
 
         reply.status(200).send(products.length);
-      } catch(err) {
+      } catch (err) {
         logger.error(err);
         reply.status(500);
       }
-    }
-  );
+    });
 
-  fastify.withTypeProvider<ZodTypeProvider>().get('/dump',
-    async (request, reply) => {
+  fastify
+    .withTypeProvider<ZodTypeProvider>()
+    .get("/dump", async (request, reply) => {
       try {
         // collect products in paginated fashion
         const productCount = await prisma.product.count();
@@ -231,17 +251,16 @@ export default async function (fastify: FastifyInstance) {
               colorWay: true,
               make: true,
               previewImageUrl: true,
-            }
+            },
           });
 
           products.push(...productsChunk);
         }
 
         reply.status(200).send(products);
-      } catch(err) {
+      } catch (err) {
         logger.error(err);
         reply.status(500);
       }
-    }
-  );
+    });
 }
