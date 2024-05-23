@@ -124,9 +124,12 @@ async function getProductData(sku: string): Promise<StockxProductData> {
 }
 
 async function getProductPricing(link: string): Promise<Record<string, number>> {
-  const res = await humanoid.get('https://stockx.com/' + link.split('.com/')[1], {
-    // ...generateProxy('https'),
-  });
+  const res = await humanoid.get(
+    'https://stockx.com/' + link.split('.com/')[1], // url
+    undefined, // querystring
+    undefined, // headers
+    generateProxyString('https') // proxy string
+  );
 
   const $ = cheerio.load(res.body);
 
