@@ -109,13 +109,11 @@ export default async function (fastify: FastifyInstance) {
         await prisma.visit.create({ data: { productId: request.params.id } });
 
         // Check to see if the product is an old scrape or has no prices
-        const pricesNeedUpdates = product.prices.find(
-          (price) => differenceInDays(price.createdAt, new Date()) >= 1
-        );
-        // if (product.prices.length === 0 || pricesNeedUpdates) {
+        const pricesNeedUpdates = Math.abs(differenceInDays(product.prices[0]?.createdAt ?? new Date(), new Date())) >= 1
+        if (product.prices.length === 0 || pricesNeedUpdates) {
           console.log(product, `pricing needs updating on ${product.id}`)
           await fastify.redis.publish("update-pricing", product.id);
-        // }
+        }
       } catch (e) {
         logger.error(e);
         reply.status(500);
@@ -162,12 +160,10 @@ export default async function (fastify: FastifyInstance) {
         await prisma.visit.create({ data: { productId: product.id } });
 
         // Check to see if the product is an old scrape or has no prices
-        const pricesNeedUpdates = product.prices.find(
-          (price) => differenceInDays(price.createdAt, new Date()) >= 1
-        );
-        // if (product.prices.length === 0 || pricesNeedUpdates) {
+        const pricesNeedUpdates = Math.abs(differenceInDays(product.prices[0]?.createdAt ?? new Date(), new Date())) >= 1
+        if (product.prices.length === 0 || pricesNeedUpdates) {
           await fastify.redis.publish("update-pricing", product.id);
-        // }
+        }
       } catch {
         reply.status(500);
       }
