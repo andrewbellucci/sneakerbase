@@ -165,9 +165,9 @@ export default async function (fastify: FastifyInstance) {
         const pricesNeedUpdates = product.prices.find(
           (price) => differenceInDays(price.createdAt, new Date()) >= 1
         );
-        if (product.prices.length === 0 || pricesNeedUpdates) {
+        // if (product.prices.length === 0 || pricesNeedUpdates) {
           await fastify.redis.publish("update-pricing", product.id);
-        }
+        // }
       } catch {
         reply.status(500);
       }
@@ -205,63 +205,63 @@ export default async function (fastify: FastifyInstance) {
     }
   );
 
-  fastify
-    .withTypeProvider<ZodTypeProvider>()
-    .get("/sneakers-without-prices", async (request, reply) => {
-      try {
-        // get products without prices
-        const products = await prisma.product.findMany({
-          where: {
-            prices: {
-              none: {},
-            },
-          },
-        });
-
-        reply.status(200).send(products.length);
-      } catch (err) {
-        logger.error(err);
-        reply.status(500);
-      }
-    });
-
-  fastify
-    .withTypeProvider<ZodTypeProvider>()
-    .get("/dump", async (request, reply) => {
-      try {
-        // collect products in paginated fashion
-        const productCount = await prisma.product.count();
-
-        const products: {
-          id: string;
-          title: string;
-          slug: string;
-          colorWay: string;
-          make: string;
-          previewImageUrl: string;
-        }[] = [];
-
-        for (let i = 0; i < productCount; i += 10000) {
-          const productsChunk = await prisma.product.findMany({
-            skip: i,
-            take: 10000,
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              colorWay: true,
-              make: true,
-              previewImageUrl: true,
-            },
-          });
-
-          products.push(...productsChunk);
-        }
-
-        reply.status(200).send(products);
-      } catch (err) {
-        logger.error(err);
-        reply.status(500);
-      }
-    });
+  // fastify
+  //   .withTypeProvider<ZodTypeProvider>()
+  //   .get("/sneakers-without-prices", async (request, reply) => {
+  //     try {
+  //       // get products without prices
+  //       const products = await prisma.product.findMany({
+  //         where: {
+  //           prices: {
+  //             none: {},
+  //           },
+  //         },
+  //       });
+  //
+  //       reply.status(200).send(products.length);
+  //     } catch (err) {
+  //       logger.error(err);
+  //       reply.status(500);
+  //     }
+  //   });
+  //
+  // fastify
+  //   .withTypeProvider<ZodTypeProvider>()
+  //   .get("/dump", async (request, reply) => {
+  //     try {
+  //       // collect products in paginated fashion
+  //       const productCount = await prisma.product.count();
+  //
+  //       const products: {
+  //         id: string;
+  //         title: string;
+  //         slug: string;
+  //         colorWay: string;
+  //         make: string;
+  //         previewImageUrl: string;
+  //       }[] = [];
+  //
+  //       for (let i = 0; i < productCount; i += 10000) {
+  //         const productsChunk = await prisma.product.findMany({
+  //           skip: i,
+  //           take: 10000,
+  //           select: {
+  //             id: true,
+  //             title: true,
+  //             slug: true,
+  //             colorWay: true,
+  //             make: true,
+  //             previewImageUrl: true,
+  //           },
+  //         });
+  //
+  //         products.push(...productsChunk);
+  //       }
+  //
+  //       reply.status(200).send(products);
+  //     } catch (err) {
+  //       logger.error(err);
+  //       reply.status(500);
+  //     }
+  //   });
 }
