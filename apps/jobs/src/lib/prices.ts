@@ -13,6 +13,8 @@ export async function handlePriceProcessing(productId: string) {
 
   workers.add(productId);
 
+  console.log(`starting ${productId}`);
+
   try {
     await Promise.allSettled([
       stockXProcessPricing(productId),
@@ -21,10 +23,11 @@ export async function handlePriceProcessing(productId: string) {
     ]);
 
     workers.delete(productId);
-
+    console.log(`success for ${productId}`);
     return true;
   } catch {
     workers.delete(productId);
+    console.log(`failed for ${productId}`);
 
     return false;
   }
