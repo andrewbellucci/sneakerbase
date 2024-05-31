@@ -113,7 +113,7 @@ export default async function (fastify: FastifyInstance) {
           (price) => differenceInDays(price.createdAt, new Date()) >= 1
         );
         // if (product.prices.length === 0 || pricesNeedUpdates) {
-          logger.info(product, `pricing needs updating on ${product.id}`)
+          console.log(product, `pricing needs updating on ${product.id}`)
           await fastify.redis.publish("update-pricing", product.id);
         // }
       } catch (e) {
