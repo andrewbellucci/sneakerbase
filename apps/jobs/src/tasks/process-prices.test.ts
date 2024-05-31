@@ -18,7 +18,7 @@ test("with stockx price processing for a sneaker", async () => {
   // const priceProcessed = await handlePriceProcessing(firstProduct.id);
   let priceProcessed = false;
   try {
-    await flightClubProcessPricing(firstProduct.id);
+    await stockXProcessPricing(firstProduct.id);
     priceProcessed = true;
   } catch (e) {
     console.error(e);

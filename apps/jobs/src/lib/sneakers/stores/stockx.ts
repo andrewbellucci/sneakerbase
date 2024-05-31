@@ -6,6 +6,7 @@ import { Price } from "../types";
 import { Sentry } from "../../../utils/sentry";
 import * as cheerio from "cheerio";
 import axios from "axios";
+import request from "request-promise"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloudscraper = require("cloudscraper");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -42,7 +43,7 @@ export async function processPricing(productId: string): Promise<void> {
 
 
     const { prices, url } = await getPricesAndUrl(product.sku);
-
+    console.log(prices)
     if (product.stockXUrl !== url) {
       await prisma.product.update({
         where: { id: productId },
@@ -91,7 +92,6 @@ async function getPricesAndUrl(sku: string): Promise<{ prices: Price[], url: str
   console.log('product found, finding pricing')
 
   const pricing = await getProductPricing(productData.link);
-  console.log('pricing found')
 
   return {
     prices: Object.keys(pricing).map(size => ({
@@ -124,14 +124,12 @@ async function getProductData(sku: string): Promise<StockxProductData> {
 }
 
 async function getProductPricing(link: string): Promise<Record<string, number>> {
-  const res = await humanoid.get(
-    'https://stockx.com/' + link.split('.com/')[1], // url
-    undefined, // querystring
-    undefined, // headers
-    generateProxyString('https') // proxy string
-  );
-
-  const $ = cheerio.load(res.body);
+  const res = await request({
+    url: 'https://stockx.com/' + link.split('.com/')[1],
+    proxy: 'http://brd-customer-hl_07097a4d-zone-sneakerbase:f5b3z7cw5624@brd.superproxy.io:22225',
+    rejectUnauthorized: false
+  })
+  const $ = cheerio.load(res);
 
   const nextData = JSON.parse($('#__NEXT_DATA__').html() ?? "");
 

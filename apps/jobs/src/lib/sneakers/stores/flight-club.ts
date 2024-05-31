@@ -118,9 +118,6 @@ async function getProductPricing(link: string): Promise<Record<string, number>> 
     { retries: 20 }
   );
 
-  console.log(pricingResponse);
-
-
   return pricingResponse;
 }
 
@@ -146,7 +143,6 @@ const getPricing = async (slug: string) => {
 
 
   const token = tokenResponse?.body as unknown as string;
-  console.log('token', token)
 
   // let pricingResponse: Response | null = null;
   // try {
@@ -197,8 +193,6 @@ const getPricing = async (slug: string) => {
 
 
   const responseBody: any = await res.json();
-
-  console.log(responseBody)
 
   // const responseBody: any = JSON.parse((pricingResponse!.body as unknown as string));
 

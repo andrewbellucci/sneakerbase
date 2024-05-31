@@ -1,29 +1,29 @@
 import { env } from "./env";
 
-export const generateProxy = (protocol: 'http' | 'https') => {
+export const generateProxy = (protocol: 'http' | 'https', bright?: boolean) => {
   return {
     proxy: {
       protocol,
-      host: env.PROXY_HOST,
-      port: Number(env.PROXY_PORT),
+      host: bright ? env.BRIGHT_PROXY_HOST : env.PROXY_HOST,
+      port: Number(bright ? env.BRIGHT_PROXY_PORT : env.PROXY_PORT),
       auth: {
-        username: env.PROXY_USERNAME,
-        password: env.PROXY_PASSWORD,
+        username: bright ? env.BRIGHT_PROXY_USERNAME : env.PROXY_USERNAME,
+        password: bright ? env.BRIGHT_PROXY_PASSWORD : env.PROXY_PASSWORD,
       }
     }
   };
 }
 
-export const generateProxyString = (protocol: 'http' | 'https') => {
+export const generateProxyString = (protocol: 'http' | 'https', bright?: boolean) => {
   return `${
     protocol
   }://${
-    env.PROXY_USERNAME
+    bright ? env.BRIGHT_PROXY_USERNAME : env.PROXY_USERNAME
   }:${
-    env.PROXY_PASSWORD
+    bright ? env.BRIGHT_PROXY_PASSWORD : env.PROXY_PASSWORD
   }@${
-    env.PROXY_HOST
+    bright ? env.BRIGHT_PROXY_HOST : env.PROXY_HOST
   }:${
-    env.PROXY_PORT
+    bright ? env.BRIGHT_PROXY_PORT : env.PROXY_PORT
   }`;
 }

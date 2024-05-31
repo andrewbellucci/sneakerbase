@@ -13,6 +13,10 @@ const EnvSchema = z.object({
   PROXY_PORT: z.string(),
   PROXY_USERNAME: z.string(),
   PROXY_PASSWORD: z.string(),
+  BRIGHT_PROXY_HOST: z.string(),
+  BRIGHT_PROXY_PORT: z.string(),
+  BRIGHT_PROXY_USERNAME: z.string(),
+  BRIGHT_PROXY_PASSWORD: z.string(),
   SENTRY_DSN: z.string(),
   REDIS_URL: z.string(),
 });
@@ -29,6 +33,10 @@ const variables = {
   PROXY_PORT: process.env.PROXY_PORT,
   PROXY_USERNAME: process.env.PROXY_USERNAME,
   PROXY_PASSWORD: process.env.PROXY_PASSWORD,
+  BRIGHT_PROXY_HOST: process.env.PROXY_HOST,
+  BRIGHT_PROXY_PORT: process.env.PROXY_PORT,
+  BRIGHT_PROXY_USERNAME: process.env.PROXY_USERNAME,
+  BRIGHT_PROXY_PASSWORD: process.env.PROXY_PASSWORD,
   SENTRY_DSN: process.env.SENTRY_DSN,
   REDIS_URL: process.env.REDIS_URL,
 };
