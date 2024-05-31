@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 RUN apt-get update -y && apt-get install -y openssl
-RUN npm install -g pnpm@8.10.2
+RUN npm install -g pnpm@9.1.2
 RUN pnpm install
 RUN cd apps/api-gateway && pnpm build
 
