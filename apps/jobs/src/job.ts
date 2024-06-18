@@ -3,6 +3,7 @@ import sneakerDiscovery from "./tasks/sneaker-discovery";
 import processPrices from "./tasks/process-prices";
 import { handlePriceProcessing } from "./lib/prices";
 import { env } from "./utils/env";
+import sneakerOfTheDay from "src/tasks/sneaker-of-the-day";
 
 console.log("Scheduling jobs");
 
@@ -11,6 +12,8 @@ void sneakerDiscovery();
 
 // Start the sneaker price processing task
 // void processPrices();
+
+void sneakerOfTheDay()
 
 console.log("Jobs scheduled");
 

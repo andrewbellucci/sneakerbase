@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "remix-image";
 
 interface SneakerImageProps {
   src: string;
@@ -9,19 +10,19 @@ interface SneakerImageProps {
   fill?: boolean
 }
 
-export default function SneakerImage({ src: dSrc, alt, width, height, fill, className }: SneakerImageProps) {
-  const [src, setSrc] = useState(dSrc);
+const PLACEHOLDER_PATH = '/images/placeholder.png'
+
+export default function SneakerImage({ src: defaultSrc, alt, width, height, className }: SneakerImageProps) {
+  const [src, setSrc] = useState(() => defaultSrc);
 
   return (
     <img
       src={src}
       alt={alt}
+      onError={() => setSrc(PLACEHOLDER_PATH)}
+      className={className}
       width={width}
       height={height}
-      className={className}
-      // onError={() => setSrc('/images/placeholder.png')}
-      // blurDataURL={'/images/placeholder.png'}
-      // placeholder={'blur'}
     />
   );
 }
