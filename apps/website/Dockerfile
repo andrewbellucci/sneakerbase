@@ -12,4 +12,4 @@ RUN npm install -g pnpm@9.1.2
 RUN pnpm install
 RUN cd apps/website && pnpm build
 
-CMD ["pnpm", "start", "--", "-C", "apps/website"]
+CMD ["pnpm", "-C", "apps/website", "start"]
