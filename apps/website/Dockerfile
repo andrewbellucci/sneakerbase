@@ -1,5 +1,5 @@
 # base node image
-FROM node:18-bullseye-slim as base
+FROM node:21-slim as base
 
 WORKDIR /app
 
