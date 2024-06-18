@@ -10,7 +10,7 @@ interface SneakerImageProps {
   fill?: boolean
 }
 
-const PLACEHOLDER_PATH = '/images/placeholder.png'
+const PLACEHOLDER = 'https://cdn.sneakerbase.io/product/placeholder.png'
 
 export default function SneakerImage({ src: defaultSrc, alt, width, height, className }: SneakerImageProps) {
   const [src, setSrc] = useState(() => defaultSrc);
@@ -19,7 +19,7 @@ export default function SneakerImage({ src: defaultSrc, alt, width, height, clas
     <img
       src={src}
       alt={alt}
-      onError={() => setSrc(PLACEHOLDER_PATH)}
+      onError={() => setSrc(PLACEHOLDER)}
       className={className}
       width={width}
       height={height}
