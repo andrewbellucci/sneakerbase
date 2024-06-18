@@ -6,7 +6,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import "remix-image/remix-image.css";
 import "@fontsource/outfit/400.css";
 import "@fontsource/outfit/500.css";
 import "@fontsource/outfit/600.css";
