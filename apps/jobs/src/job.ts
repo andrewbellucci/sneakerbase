@@ -3,8 +3,8 @@ import sneakerDiscovery from "./tasks/sneaker-discovery";
 import processPrices from "./tasks/process-prices";
 import { handlePriceProcessing } from "./lib/prices";
 import { env } from "./utils/env";
-import sneakerOfTheDay from "src/tasks/sneaker-of-the-day";
-import {pickSneakerOfTheDay} from "src/lib/sneakers";
+import sneakerOfTheDay from "./tasks/sneaker-of-the-day";
+import {pickSneakerOfTheDay} from "./lib/sneakers";
 
 console.log("Scheduling jobs");
 
