@@ -15,6 +15,7 @@ import slugify from "slugify";
 import { Sentry } from "../../utils/sentry";
 import {createClient} from "redis";
 import {env} from "../../utils/env";
+import sneakerOfTheDay from "src/tasks/sneaker-of-the-day";
 
 async function getSneakerTraits(term = ""): Promise<string[]> {
   const response = await searchStockX(term);
@@ -176,7 +177,19 @@ export async function pickSneakerOfTheDay() {
       },
     });
 
-    if (!sneaker) return;
+    if (!sneaker) return pickSneakerOfTheDay();
+
+    // if the sneaker was picked in the last 2 months, try again
+    const TWO_MONTHS = 5259600000;
+    const sneakers = await prisma.sneakerOfTheDay.findMany({
+      where: {
+        createdAt: {
+          gt: new Date(Date.now() - TWO_MONTHS)
+        }
+      }
+    });
+
+    if (sneakers.length > 0) return pickSneakerOfTheDay();
 
     await prisma.sneakerOfTheDay.create({
       data: { productId: sneaker.id },
