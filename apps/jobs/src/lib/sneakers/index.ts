@@ -13,6 +13,8 @@ import { processSneakerImage } from "../images";
 import { handlePriceProcessing } from "../prices";
 import slugify from "slugify";
 import { Sentry } from "../../utils/sentry";
+import {createClient} from "redis";
+import {env} from "../../utils/env";
 
 async function getSneakerTraits(term = ""): Promise<string[]> {
   const response = await searchStockX(term);
@@ -179,6 +181,16 @@ export async function pickSneakerOfTheDay() {
     await prisma.sneakerOfTheDay.create({
       data: { productId: sneaker.id },
     });
+
+    const client = await createClient({
+      url: env.REDIS_URL,
+    })
+      .on("error", (err) => console.log("Redis Client Error", err))
+      .connect();
+
+    await client.publish('update-pricing', sneaker.id)
+
+    await client.disconnect()
   } catch (error) {
     Sentry.captureException(error);
   }
