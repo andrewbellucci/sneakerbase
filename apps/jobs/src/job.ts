@@ -4,6 +4,7 @@ import processPrices from "./tasks/process-prices";
 import { handlePriceProcessing } from "./lib/prices";
 import { env } from "./utils/env";
 import sneakerOfTheDay from "src/tasks/sneaker-of-the-day";
+import {pickSneakerOfTheDay} from "src/lib/sneakers";
 
 console.log("Scheduling jobs");
 
@@ -28,6 +29,9 @@ console.log("Jobs scheduled");
 
   // Handle price processing for updates, and non priced sneakers.
   await client.subscribe("update-pricing", handlePriceProcessing);
+
+  // On the fly SotD
+  await client.subscribe("gen-sotd", pickSneakerOfTheDay);
 
   console.log("Scheduled task listeners");
 })();

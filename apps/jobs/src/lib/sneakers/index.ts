@@ -166,9 +166,8 @@ export async function pickSneakerOfTheDay() {
         isPlaceholder: false,
       },
     });
-    const randomIndex = Math.floor(Math.random() * sneakersAvailable);
+    const randomIndex = Math.floor(Math.random() * (sneakersAvailable - 1));
     const sneaker = await prisma.product.findFirst({
-      take: 5,
       skip: randomIndex,
       where: {
         isPlaceholder: false,

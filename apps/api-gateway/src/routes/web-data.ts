@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../utils/prisma";
 import { env } from "../utils/env";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import z from "zod";
 
 export default async function (fastify: FastifyInstance) {
   // Grabs all the top viewed products in our catalog
@@ -127,6 +128,31 @@ export default async function (fastify: FastifyInstance) {
         reply.status(200);
 
         return products;
+      } catch {
+        reply.status(500);
+      }
+    }
+  );
+
+  // Get the newly added products
+  fastify.withTypeProvider<ZodTypeProvider>().get('/gen-sotd',
+    {
+      schema: {
+        querystring: z.object({
+          token: z.string(),
+        }),
+      },
+    },
+    async (request, reply) => {
+      if (env.WEB_TOKEN !== request.query.token) {
+        reply.status(401);
+        return;
+      }
+
+      try {
+        await fastify.redis.publish("gen-sotd", "");
+
+        reply.status(200);
       } catch {
         reply.status(500);
       }
