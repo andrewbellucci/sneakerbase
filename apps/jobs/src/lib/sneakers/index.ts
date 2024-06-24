@@ -191,16 +191,13 @@ export async function pickSneakerOfTheDay() {
       }
     });
 
-    console.log(sneaker)
-
     if (!sneaker) return pickSneakerOfTheDay();
-    if (sneaker.prices.length === 0) return pickSneakerOfTheDay();
-
 
     // if the sneaker was picked in the last 2 months, try again
     const TWO_MONTHS = 5259600000;
     const sneakers = await prisma.sneakerOfTheDay.findMany({
       where: {
+        productId: sneaker.id,
         createdAt: {
           gt: new Date(Date.now() - TWO_MONTHS)
         }
