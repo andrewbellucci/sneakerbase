@@ -191,6 +191,8 @@ export async function pickSneakerOfTheDay() {
       }
     });
 
+    console.log(sneaker)
+
     if (!sneaker) return pickSneakerOfTheDay();
     if (sneaker.prices.length === 0) return pickSneakerOfTheDay();
 
