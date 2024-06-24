@@ -162,6 +162,10 @@ export async function processSneakersFound(sneakers: SneakerResponse[]) {
   await promiseAllSettledInBatches(processSneaker, sneakers, 15);
 }
 
+function randomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export async function pickSneakerOfTheDay() {
   try {
     const sneakersAvailable = await prisma.product.count({
@@ -169,15 +173,26 @@ export async function pickSneakerOfTheDay() {
         isPlaceholder: false,
       },
     });
-    const randomIndex = Math.floor(Math.random() * (sneakersAvailable - 1));
+    const randomIndex = randomInt(0, sneakersAvailable - 1);
     const sneaker = await prisma.product.findFirst({
+      take: 5,
       skip: randomIndex,
       where: {
         isPlaceholder: false,
       },
+      include: {
+        prices: {
+          select: {
+            id: true,
+          },
+          take: 1,
+        }
+      }
     });
 
     if (!sneaker) return pickSneakerOfTheDay();
+    if (sneaker.prices.length === 0) return pickSneakerOfTheDay();
+
 
     // if the sneaker was picked in the last 2 months, try again
     const TWO_MONTHS = 5259600000;
