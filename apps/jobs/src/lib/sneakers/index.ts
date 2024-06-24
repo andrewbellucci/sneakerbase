@@ -174,6 +174,7 @@ export async function pickSneakerOfTheDay() {
       },
     });
     const randomIndex = randomInt(0, sneakersAvailable - 1);
+    console.log('randomIndex', randomIndex)
     const sneaker = await prisma.product.findFirst({
       take: 5,
       skip: randomIndex,
@@ -209,6 +210,8 @@ export async function pickSneakerOfTheDay() {
     await prisma.sneakerOfTheDay.create({
       data: { productId: sneaker.id },
     });
+
+    console.log('picked random', sneaker.id)
 
     const client = await createClient({
       url: env.REDIS_URL,
